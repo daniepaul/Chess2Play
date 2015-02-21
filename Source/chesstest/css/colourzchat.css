@@ -1,0 +1,46 @@
+/****************
+
+Company: Colourz Technologies 
+version: ColourzChat V1.0
+description: chatting window
+
+--------------------
+
+created by: Senthil Kumar P
+created on:  
+completed on:
+comments:
+------------------
+tested by: Danielpaulrajsing
+tested on:
+test comment:
+----------------------------
+updated by: Danielpaulrajsing
+updated on:
+update completed on:
+
+****************/
+.chatpanel
+{
+position:absolute;right:0px; margin:5px; font-size:10pt; float:right;font-family:Arial; margin-bottom:2px; vertical-align:bottom; height:250px; 
+}
+.chatbox
+{width:200px; overflow:hidden; background-color:#CCCCCC; padding:1px; float:right; margin-left:3px;}
+.chatTitle
+{height:20px; overflow:hidden; background-color:#333333; color:#FFFFFF; padding:2px; vertical-align:baseline;}
+.showconversation
+{height:200px;min-height:75px; overflow:auto; background-color:#F9F9F9; line-height:150%}
+.MessageBox
+{width:175px; border:1px #666666 solid; background-color:#FFFFFF; padding:2px; font-size:10pt; margin-bottom:3px; vertical-align:middle}
+.maindiv
+{width:200px; overflow:hidden; background-color:#CCCCCC; float:right; padding:2px; margin-left:3px;bottom:0px; }
+.border{ border:thick; color:#000000;}
+.closebutton{ float:right; vertical-align:middle; cursor:pointer}
+.user{text-decoration:none;}
+.smilybox{position:absolute; bottom:23px; height:100px; display:none; padding-left:90px;
+}
+.smilybox table{background-color:#F2F2F2; width:100px; height:100px;border:1px solid #999999; border-bottom:0px}
+.bottom_civ
+{
+background-color:#F2F2F2; padding:2px; border-top:1px solid #CCCCCC;
+}

@@ -1,0 +1,5 @@
+d2-d4 d7-d5
+e2-e3 Kd8-d7
+f2-f3 e7-e6
+e3-e4 c7-c6
+Bf1-b5 
