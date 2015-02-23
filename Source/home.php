@@ -1,7 +1,7 @@
-<? 
-$con=mysql_connect('localhost','root','') or die("could not select to mysql server!");
-mysql_select_db('chess',$con) or die("could not select database!");
-session_start();
+<?php
+include_once("config.php");
+include_once("include/dbopen.php");
+
 if($_SESSION['userid']=="")
 {
 header("Location:index.php");
@@ -17,6 +17,6 @@ header("Location:index.php");
   <frame src="frontpage.php" scrolling="NO">
 </frameset><noframes></noframes>
 </html>
-<?
-mysql_close($con);
+<?php
+include_once("include/dbclose.php");
 ?>

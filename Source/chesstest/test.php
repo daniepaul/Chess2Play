@@ -1,7 +1,6 @@
-<? ob_start();
-$con=mysql_connect('localhost','root','') or die("could not select to mysql server!");
-mysql_select_db('chess',$con) or die("could not select database!");
-session_start();
+<?php
+include_once("config.php");
+include_once("apis/dbopen.php");
 
 $userid=$_SESSION['userid'];
 if($userid == "")
@@ -10,7 +9,6 @@ header("Location:../index.php");
 }
 $gameplayed1=mysql_query("select playedgame,wongame,drawgame,losegame,points from userpoints where userid='$userid'");
 $gameplayed=mysql_fetch_assoc($gameplayed1);
-
 $display=mysql_query("select gameid,whitePlayer,blackPlayer,whiteRequest,blackRequest from game where (whitePlayer='$userid' or blackPlayer='$userid') and gameStatus='A'");
 $diplayrow=mysql_fetch_assoc($display);
 $uid=$diplayrow['whitePlayer'];
@@ -68,16 +66,12 @@ header("Location:../livechess.php");
 }
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Chess</title>
-<script src="../js/ajax/ajaxchess.js"></script>
-<link href="css/colourzchat.css" rel="stylesheet" type="text/css"/>
-<script src="js/colourzchat.js"></script>
-<script type="text/javascript" src="bgfade.js"></script>
-<script type="text/javascript">
+<script src="js/ajax/ajaxchess.js"></script>
+<script src="js/bootbox.min.js"></script>
+<link href="chesstest/css/colourzchat.css" rel="stylesheet" type="text/css"/>
+<script src="chesstest/js/colourzchat.js"></script>
+<script type="text/javascript" src="chesstest/bgfade.js"></script>
+<script>
 function confirmSubmit()
 {
 var agree=confirm("Do you surely want to quit?");
@@ -97,7 +91,7 @@ if (agree1)
 		  alert ("Your browser does not support AJAX!");
 		  return;
 	  } 
-		var url="../drawgame.php";
+		var url="drawgame.php";
 		url=url+"?game=draw";
 		xmlHttp.open("GET",url,true);
 		xmlHttp.send(null);
@@ -129,8 +123,7 @@ catch (e)
   }
 return xmlHttp;
 }
-</script>
-<script type="text/javascript">
+
 var RevertToColor = "";
 var SelectedCell = "noneid";
 var playerColor = "w";
@@ -244,7 +237,7 @@ if(clickedPiece == "k")
 {
 name = "name='"+clickedColor+"king'";
 }
-document.getElementById(id).innerHTML = "<img src='images/"+clickedColor+clickedPiece+".gif' id='"+clickedColor+clickedPiece+newclickedi+newclickedj+"' "+name+" />";
+document.getElementById(id).innerHTML = "<img src='chesstest/images/"+clickedColor+clickedPiece+".gif'  class=\"img-responsive\" id='"+clickedColor+clickedPiece+newclickedi+newclickedj+"' "+name+" />";
 document.getElementById(SelectedCell).innerHTML = "&nbsp";
 document.getElementById(SelectedCell).style.background = RevertToColor;
 Stricking = false;
@@ -253,7 +246,7 @@ clickedid = "none";
 PieceSelected = false;
 	if(playerColor == "b") { playerColor = "w";	}
 	else { playerColor = "b";	}
-	ajax_write("wtf.php?notation=" + msg +"&f="+filename);
+	ajax_write("chesstest/wtf.php?notation=" + msg +"&f="+filename);
 	document.getElementById("displayStatus").innerHTML = "Opponent move !";
 }
 else
@@ -544,7 +537,7 @@ if(CoinName == "k")
 {
 name = "name='"+CoinColor+"king'";
 }
-setImage = "<img src='images/"+CoinColor+CoinName+".gif' id='"+CoinColor+CoinName+Coini+Coinj+"i' "+name+" />";
+setImage = "<img src='chesstest/images/"+CoinColor+CoinName+".gif' class=\"img-responsive\" id='"+CoinColor+CoinName+Coini+Coinj+"i' "+name+" />";
 
 document.getElementById("cell"+Coini+Coinj).innerHTML = setImage;
 
@@ -629,7 +622,7 @@ function ajax_read(url) {
 		document.getElementById("displayNotation").innerHTML = FullMessage;
 		zeit = new Date(); 
 		ms = (zeit.getHours() * 24 * 60 * 1000) + (zeit.getMinutes() * 60 * 1000) + (zeit.getSeconds() * 1000) + zeit.getMilliseconds(); 
-		intUpdate = setTimeout("ajax_read('logs/"+filename+"?x=" + ms + "')", waittime)
+		intUpdate = setTimeout("ajax_read('chesstest/logs/"+filename+"?x=" + ms + "')", waittime)
 		}
 	}
 
@@ -638,7 +631,7 @@ function ajax_read(url) {
 }
 		zeit = new Date(); 
 		ms = (zeit.getHours() * 24 * 60 * 1000) + (zeit.getMinutes() * 60 * 1000) + (zeit.getSeconds() * 1000) + zeit.getMilliseconds(); 
-var intUpdate = setTimeout("ajax_read('logs/"+filename+"')", waittime);
+var intUpdate = setTimeout("ajax_read('chesstest/logs/"+filename+"')", waittime);
 
 function SelectColor(v)
 {
@@ -712,7 +705,7 @@ xmlHttp=GetXmlHttpObject();
 		  alert ("Your browser does not support AJAX!");
 		  return;
 	  } 
-		var url="../wingame.php";
+		var url="wingame.php";
 		url=url+"?action=finish&mycolor=<?php echo $playercolor; ?>";
 		xmlHttp.open("GET",url,true);
 		xmlHttp.send(null);
@@ -805,163 +798,73 @@ PreviousNotation = notations;
 }
 */
 </script>
-</head>
-<body onload="userstatus(<?php echo $diplayrow['gameid'];?>); loadchild('<?php echo $room1; ?>','<?php echo $userid;?>','<?php echo $diplayrowopp['username']; ?>','<?php echo $diplayrowopp['userid']; ?>');">
-<table width="200" align="left">
-<tr>
-<td>
-<table width="200" align="right" border="1" style="background-color:#99CC99">
-<tr valign="top">
-<td align="center">
-<b>Chess Game</b>
-</td>
-</tr>
-<tr valign="top">
-<td>
-&nbsp;<b><? echo $_SESSION['username'];?></b>&nbsp;Vs&nbsp;<b><? echo $diplayrowopp['username'];?></b>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<a href="#" onClick="return confirmSubmit1()">Request draw</a>&nbsp;&nbsp;<a href="test.php?action=cancel" onClick="return confirmSubmit()">Resign</a>&nbsp;</td>
-</tr>
-
-<tr valign="top">
-<td>
-Your Color&nbsp;:&nbsp;<b><?php if($playercolor=="w"){echo "White";}else{echo "Black";}?></b>
-</td>
-</tr>
-
-<tr valign="top">
-<td>
-Playing status&nbsp;:
-</td>
-</tr>
-
-<tr valign="top">
-<td>
-<div style="float:right; margin-right:20px; width:120px; font-size:12pt; font-weight:bold" id="displayStatus"></div>
-</td>
-</tr>
-
-</table>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<table width="200" align="left">
-<tr>
-<td align="left" border="1">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Game History</b>
-</td>
-</tr>
-<tr>
-<td align="left">
-<div style="position:absolute; float:left; margin-left:20px; width:130px; word-spacing:20px;" id="displayNotation"></div>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
-<table width="200" align="right">
-<tr>
-<td height="10px">
-</td>
-</tr>
-<tr>
-<td height="10px">
-<table width="200" align="right" border="1" style="background-color:#FFCC99">
-<tr valign="top">
-<td align="center">
-<b>Game Points</b>
-</td>
-</tr>
-<tr valign="top">
-<td>
-Over all&nbsp;:&nbsp;<?php echo $gameplayed['points'];?>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-<tr>
-<td height="10px">
-</td>
-</tr>
-<tr>
-<td>
-<table width="200" align="right" border="1" style="background-color:#99CCFF">
-<tr valign="top">
-<td align="center">
-<b>Game Played</b>
-</td>
-</tr>
-<tr valign="top">
-<td>
-Total&nbsp;:&nbsp;<?php echo ($gameplayed['playedgame'])-1;?>&nbsp;&nbsp;Playing game&nbsp;:&nbsp;<?php echo $gameplayed['playedgame'];?>
-</td>
-</tr>
-<tr valign="top">
-<td>
-Won&nbsp;:&nbsp;<?php echo $gameplayed['wongame'];?>
-</td>
-</tr>
-<tr valign="top">
-<td>
-Lose&nbsp;:&nbsp;<?php echo $gameplayed['losegame'];?>
-</td>
-</tr>
-
-<tr valign="top">
-<td>
-Draw&nbsp;:&nbsp;<?php echo $gameplayed['drawgame'];?>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-
-<tr>
-<td>
-<table align="right">
-<tr>
-<td>
-<div class="chatpanel" align="right" id="chatpanel"></div>
-<img src="images/close.png" style="display:none" /> <img src="images/minimize.png" style="display:none" />
-<img src="smileys/mini_smile.gif" style="display:none" />
-</td>
-</tr>
-</table> 
-</td>
-</tr>
-</table>
-<table align="center" width="500" height="500" style="border:1px #CCCCCC solid">
-  <?php 
+<script>
+$(function() {
+  userstatus(<?php echo $diplayrow['gameid'];?>);
+  loadchild('<?php echo $room1; ?>','<?php echo $userid;?>','<?php echo $diplayrowopp['username']; ?>','<?php echo $diplayrowopp['userid']; ?>');
+});
+</script>
+<div class="col-md-5">
+  <div class="panel">
+    <div class="panel-heading customHeading"><? echo $_SESSION['username'];?></b>&nbsp;Vs&nbsp;<b><? echo $diplayrowopp['username'];?></b></div>
+    <div class="panel-body">
+      <table class="table"  id="chessTableStyling" style="border:1px #CCCCCC solid">
+        <?php 
 $color[0] = "#FFFFFF";
 $color[1] = "#CCCCCC";
 if($playercolor == 'b')
 { 
 for($j=1; $j<= 8; $j++) { ?>
-  <tr>
-    <? for($i=1; $i<= 8; $i++) { $color_code = ($i+$j)%2;?>
-    <td width="12.5%" height="12.5%" style="cursor:pointer; background:<?=$color[$color_code];?>" align="center" valign="middle" id="cell<?=$i?><?=$j?>" onclick="ClickedCell(this.id);" ondblclick="ClickedCell(this.id);">&nbsp;</td>
-    <? } ?>
-  </tr>
-<?php } }else {
+        <tr>
+          <? for($i=1; $i<= 8; $i++) { $color_code = ($i+$j)%2;?>
+          <td width="12.5%" height="12.5%" style="cursor:pointer; background:<?=$color[$color_code];?>" align="center" valign="middle" id="cell<?=$i?><?=$j?>" onclick="ClickedCell(this.id);" ondblclick="ClickedCell(this.id);">&nbsp;</td>
+          <? } ?>
+        </tr>
+        <?php } }else {
 for($j=8; $j>= 1; $j--) { ?>
-  <tr>
-    <? for($i=8; $i>= 1; $i--) { $color_code = ($i+$j)%2;?>
-    <td width="12.5%" height="12.5%" style="cursor:pointer; background:<?=$color[$color_code];?>" align="center" valign="middle" id="cell<?=$i?><?=$j?>" onclick="ClickedCell(this.id);" ondblclick="ClickedCell(this.id);">&nbsp;</td>
-    <? } ?>
-  </tr>
-  <?php } }?>
-</table>
+        <tr>
+          <? for($i=8; $i>= 1; $i--) { $color_code = ($i+$j)%2;?>
+          <td width="12.5%" height="12.5%" style="cursor:pointer; background:<?=$color[$color_code];?>" align="center" valign="middle" id="cell<?=$i?><?=$j?>" onclick="ClickedCell(this.id);" ondblclick="ClickedCell(this.id);">&nbsp;</td>
+          <? } ?>
+        </tr>
+        <?php } }?>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="panel">
+    <div class="panel-heading customHeading2">Chat</div>
+    <link href="chesstest/css/colourzchat.css" rel="stylesheet" type="text/css"/>
+    <script src="chesstest/js/colourzchat.js"></script>
+    <div class="panel-body" align="right" id="chatpanel"></div>
+    <img src="chesstest/images/close.png" style="display:none" /> <img src="chesstest/images/minimize.png" style="display:none" /> <img src="chesstest/smileys/mini_smile.gif" style="display:none" />
+  </div>
+</div>
+<div class="col-md-3">
+  <div class="panel">
+    <div class="panel-heading customHeading3">Game Details</div>
+    <table class="table table-striped">
+      <tr>
+        <td>Your Color</td>
+        <td><?php if($playercolor=="w"){echo "White";}else{echo "Black";}?></td>
+      </tr>
+      <tr>
+        <td>Play Status</td>
+        <td><div id="displayStatus"></div></td>
+      </tr>
+      <tr>
+        <td colspan="2"><a class="btn btn-primary" href="#" onClick="return confirmSubmit1()" role="button">Request Draw</a> <a class="btn btn-primary" href="test.php?action=cancel" onClick="return confirmSubmit()" role="button">Resign</a></td>
+      </tr>
+    </table>
+    <div class="panel-heading customHeading3">Game History</div>
+    <div class="panel-body">
+      <div style="word-spacing:20px;" id="displayNotation"></div>
+    </div>
+  </div>
+</div>
 <script type="text/javascript">initGame();</script>
 <div id="noneid" align="center" style="color:#FF0000; font-weight:bold"></div>
-</body>
-</html>
+<?php
+include_once("apis/dbclose.php");
+?>

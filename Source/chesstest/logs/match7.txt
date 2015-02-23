@@ -1,2 +1,4 @@
-d2-d4 d7-d5
-Kd1-d2 e7-e6
+e2-e4 d7-d5
+e4Xd5 Qe8-a4
+b2-b3 Qa4-e4
+Qe1Xe4 

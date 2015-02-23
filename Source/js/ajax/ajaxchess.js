@@ -88,16 +88,16 @@ function userstatus(gameid)
 				{
 					var agree=confirm("You Won! oppenent quit the game.");
 					if (agree)
-					window.location = "../livechess.php";
+					window.location = "livechess.php";
 					else	
-					window.location = "../livechess.php";
+					window.location = "livechess.php";
 				}				
 				if(xmlHttp2.responseText == "1")
 				{
 					var agree1=confirm("Oppenent Request for draw game!");
 					if (agree1)
 					{
-					window.location = "../drawgame.php?action=draw";
+					window.location = "drawgame.php?action=draw";
 					}
 					else
 					{
@@ -131,7 +131,7 @@ function userstatus(gameid)
                     alert ("Your browser does not support AJAX!");
 		            return;
 				    } 
-					var url="../drawgame.php";
+					var url="drawgame.php";
 					url=url+"?action=cancel";
 					xmlHttp9.open("GET",url,true);
 					xmlHttp9.send(null);
@@ -141,9 +141,9 @@ function userstatus(gameid)
 				{
 					var agree2=confirm("Game draw! Oppenent Accepted your request.");
 					if (agree2)
-					window.location = "../livechess.php";
+					window.location = "livechess.php";
 					else	
-					window.location = "../livechess.php";
+					window.location = "livechess.php";
 				}
 				if(xmlHttp2.responseText == "3")
 				{
@@ -180,7 +180,7 @@ function userstatus(gameid)
                     alert ("Your browser does not support AJAX!");
 		            return;
 				    } 
-					var url="../drawgame.php";
+					var url="drawgame.php";
 					url=url+"?action=clear";
 					xmlHttp10.open("GET",url,true);
 					xmlHttp10.send(null);
@@ -194,7 +194,7 @@ function userstatus(gameid)
                     alert ("Your browser does not support AJAX!");
 		            return;
 				    } 
-					var url="../drawgame.php";
+					var url="drawgame.php";
 					url=url+"?action=clear";
 					xmlHttp10.open("GET",url,true);
 					xmlHttp10.send(null);
@@ -208,7 +208,7 @@ function userstatus(gameid)
 				}
 		  }
   	}
-  	var url2="../usercheckstat.php";
+  	var url2="usercheckstat.php";
 	url2=url2+"?gameid="+gameid;
 	xmlHttp2.open("GET", url2, true);
   	xmlHttp2.send(null);

@@ -1,1 +1,5 @@
-d2-d4 d7-d5
+e2-e4 d7-d5
+e4Xd5 e7-e6
+d5-d6 b7-b5
+d6Xc7 Kd8Xc7
+Qe1Xe6 Qe8Xe6

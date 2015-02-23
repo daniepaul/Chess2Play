@@ -1,11 +1,11 @@
-<?php ob_start(); 
-$con=mysql_connect('localhost','root','') or die("could not select to mysql server!");
-mysql_select_db('chess',$con) or die("could not select database!");
-session_start();
+<?php
+include_once("config.php");
+include_once("include/dbopen.php");
+
 
 	$gameid1=$_REQUEST['gameid'];
 	$usrid=$_SESSION['userid'];
-	$chkuserstatus=mysql_query("select * from game where gameid='$gameid1'");
+	$chkuserstatus=mysql_query("select * from game where gameid='".$gameid1."'");
 	$chkuserstatusrow=mysql_fetch_assoc($chkuserstatus);
 	$uuiid=$chkuserstatusrow['whitePlayer'];
 	$uuiid1=$chkuserstatusrow['blackPlayer'];
@@ -57,5 +57,5 @@ session_start();
 	{
 	echo "4";
 	}
-mysql_close($con);
+include_once("include/dbclose.php");
 ?>

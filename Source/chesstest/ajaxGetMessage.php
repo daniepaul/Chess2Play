@@ -78,7 +78,7 @@ $smileys = array("heart.gif", "heartbroken.gif","angel.gif","please.gif","smile.
 $smileys_insert = array(":heart:",":brokenheart:",":angel:",":please:",":)",":-)",":d",":-d",";)",";-)",":[",":-[",":*",":-*",":((",":-((",":(",":-(","8(","8-(",":x",":-x",":0",":-0",":s",":-s",":p",":-p");
 for($i=0; $i<sizeof($smileys);$i++)
 {
-$smileysimg[$i] = '<img src="smileys/'.$smileys[$i].'" alt="" width="19" style="vertical-align:middle" />';
+$smileysimg[$i] = '<img src="chesstest/smileys/'.$smileys[$i].'" alt="" width="19" style="vertical-align:middle" />';
 $smileys_insert_2[$i] = strtoupper($smileys_insert [$i]);
 }
 $newt = str_replace($smileys_insert,$smileysimg,$t);

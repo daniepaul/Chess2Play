@@ -31,5 +31,5 @@ update completed on:
 </body>
 </html>
 <?php
-mysql_close($con);
+include_once("../apis/dbclose.php");
 ?>

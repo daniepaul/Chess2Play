@@ -1,7 +1,6 @@
-<? ob_start();
-$con=mysql_connect('localhost','root','') or die("could not select to mysql server!");
-mysql_select_db('chess',$con) or die("could not select database!");
-session_start();
+<?php
+include_once("config.php");
+include_once("include/dbopen.php");
 
 $userid = $_SESSION['userid'];
 $gameid=$_SESSION['gameid'];
@@ -88,6 +87,6 @@ if($_REQUEST['action']=="clear")
 	}
 }
 
-mysql_close($con);
+include_once("include/dbclose.php");
 ?>
 

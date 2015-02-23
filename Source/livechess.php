@@ -1,7 +1,6 @@
 <?php
-$con=mysql_connect('localhost','root','') or die("could not select to mysql server!");
-mysql_select_db('chess',$con) or die("could not select database!");
-session_start();
+include_once("config.php");
+include_once("include/dbopen.php");
 $userid=$_SESSION['userid'];
 $opponentuserid = $_REQUEST['opid'];
 ?>
@@ -48,6 +47,6 @@ $opponentuserid = $_REQUEST['opid'];
     </body>
 </html>
 <?php
-mysql_close($con);
+include_once("include/dbclose.php");
 ?>
 

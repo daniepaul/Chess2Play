@@ -39,8 +39,6 @@ else
 {
 	var objmaindiv=document.createElement('div');
 	objmaindiv.setAttribute('id',maindiv);
-	objmaindiv.setAttribute('class','maindiv');
-	objmaindiv.className='maindiv';
 	objmaindiv.setAttribute('align','left');
 	obj.appendChild(objmaindiv);
 	
@@ -66,8 +64,8 @@ else
 	
 	//create the message box
 	var smileydiv = '<div class="smilybox" id="smilybox_'+roomdata+'" align="right" style="display:none"></div>'
-	var smileybox = '<img src="smileys/mini_smile.gif" alt=":)" style="vertical-align:middle" title="Smileys" onclick="showsmily(\'smilybox_'+roomdata+'\')" class="smily_img" />';
-	var objinputHTML = '<div class="bottom_civ">'+smileydiv+'<input type="text" id="'+MessageBox+'" class="MessageBox" value="" onkeyup="keyup(event.keyCode,\''+MessageBox+'\',\''+SenderId+'\',\''+RecieverId+'\',\''+roomdata+'\')" />'+smileybox+'</div>';
+	var smileybox = '<img src="chesstest/smileys/smile.gif" alt=":)" style="vertical-align:middle; float:right" title="Smileys" onclick="showsmily(\'smilybox_'+roomdata+'\')" class="smily_img" />';
+	var objinputHTML = '<div class="bottom_civ">'+smileydiv+smileybox+'<input type="text" placeholder="Enter your message and press enter." id="'+MessageBox+'" class="MessageBox" value="" onkeyup="keyup(event.keyCode,\''+MessageBox+'\',\''+SenderId+'\',\''+RecieverId+'\',\''+roomdata+'\')" /></div>';
 	objmaindiv.innerHTML = objmaindiv.innerHTML+objinputHTML;
 	createsmileys(MessageBox,'smilybox_'+roomdata);
 	getChat(roomdata,showConversation);
@@ -83,7 +81,7 @@ function createsmileys(id,s)
   		  alert ("Your browser does not support AJAX!");
 		  return;
 	 } 
-	 var url="getsmiley.php?id="+id+"&s="+s+"&ms="+getAjaxTime();
+	 var url="chesstest/getsmiley.php?id="+id+"&s="+s+"&ms="+getAjaxTime();
 		xmlHttp4.onreadystatechange=function stateChangedcreatesmiley(){ 
 		if (xmlHttp4.readyState==4){ 
 			document.getElementById(s).innerHTML=xmlHttp4.responseText;
@@ -160,7 +158,7 @@ function insertChat(id,fId,tId,rm){
   		  alert ("Your browser does not support AJAX!");
 		  return;
 	 } 
-	 var url="ajaxInsertMessage.php?rm="+rm+"&cid="+tId+"&txt="+txt+"&ms="+getAjaxTime();
+	 var url="chesstest/ajaxInsertMessage.php?rm="+rm+"&cid="+tId+"&txt="+txt+"&ms="+getAjaxTime();
 		xmlHttp.onreadystatechange=function stateChangedinsertchat(){ //alert(xmlHttp.responseText);
 		if (xmlHttp.readyState==4){ 	
 			document.getElementById(id).value = "";
@@ -189,7 +187,7 @@ function getChat(rm,id){
   		 alert ("Your browser does not support AJAX!");
 		  return;
 	   }	  
-		var url="ajaxGetMessage.php?room="+rm+"&ms="+getAjaxTime();	
+		var url="chesstest/ajaxGetMessage.php?room="+rm+"&ms="+getAjaxTime();	
 		xmlHttp1.onreadystatechange=function stateChangedgetchat(){ 
 		if (xmlHttp1.readyState==4){ 	
 		 if(prevmsg[id] != xmlHttp1.responseText)
@@ -216,7 +214,7 @@ function checkChat()
   		 alert ("Your browser does not support AJAX!");
 		  return;
 	   }	  
-		var url="ajaxCheckChat.php?uid="+uid+"&ms="+getAjaxTime();
+		var url="chesstest/ajaxCheckChat.php?uid="+uid+"&ms="+getAjaxTime();
 		xmlHttp2.onreadystatechange=function stateChangedgetchat(){ 
 		if (xmlHttp2.readyState==4){ 
 		if(xmlHttp2.responseText != "")

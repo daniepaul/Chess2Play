@@ -1,9 +1,8 @@
-<? ob_start();
-$con=mysql_connect('localhost','root','') or die("could not select to mysql server!");
-mysql_select_db('chess',$con) or die("could not select database!");
-session_start();
+<?php
+include_once("config.php");
+include_once("apis/dbopen.php");
 
-$userid = $_REQUEST['userid'];
+$userid = $_SESSION['userid'];
 $gameid=$_SESSION['gameid'];
 $updatestatuslog=mysql_query("update log set status='N' where userid='$userid'");
 $usergamestatus=mysql_query("select * from game where gameid='$gameid'");
@@ -45,7 +44,7 @@ else
 $deleteinvites=mysql_query("delete from game where (whitePlayer='$userid' or blackPlayer='$userid') and gameStatus='I'");
 $deletechatmsg=mysql_query("delete from chatting where (send_id='$userid' or rec_id='$userid')");
 session_destroy();
-mysql_close($con);
-header("Location:../index.php");
+include_once("apis/dbclose.php");
+header("Location:index.php");
 ?>
 

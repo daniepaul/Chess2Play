@@ -42,7 +42,7 @@ if($r==0)
 {
 echo "<tr>";
 }
-$img = '<img src="smileys_s/'.$smi[$i].'" alt="" onclick="insertsmiley(\''.$id.'\',\''.$tex[$i].'\',\''.$s.'\')" title="'.$t_smi[$i].'" />';
+$img = '<img src="chesstest/smileys_s/'.$smi[$i].'" alt="" onclick="insertsmiley(\''.$id.'\',\''.$tex[$i].'\',\''.$s.'\')" title="'.$t_smi[$i].'" />';
 echo '<td align="center" valign="middle" onMouseOver="this.style.background=\'#FFFFFF\'" onMouseOut="this.style.background=\'\'">'.$img.'</td>';
 if($r==3)
 {

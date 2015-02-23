@@ -23,7 +23,8 @@ update completed on:
 ****************/
 ?>
 <?php
-include("includes/init.php");
+include_once("../config.php");
+include_once("../apis/dbopen.php");
 ?>
 <html>
 <head>
