@@ -1,5 +1,0 @@
-d2-d4 e7-e5
-Kd1-d2 d7-d5
-d4Xe5 Kd8-d7
-e2-e3 c7-c6
-Qe1-e2 Qe8-e7

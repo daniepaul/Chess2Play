@@ -1,0 +1,16 @@
+<div class="alertsContainer"></div>
+<table class="table" id="chessTableStyling" ng-init="init()">
+	<tr ng-repeat="boardRow in board | reverse:MyColor">
+    	<td ng-repeat="boardCell in boardRow | reverse:MyColor" width="12.5%" height="12.5%" class="chessCell {{boardCell.style}} {{boardCell.selectedClass}}" id="{{boardCell.cellid}}" valign="middle" align="center" ng-click="clickCell(boardCell)">
+        	<img class="img-responsive" width="95%" ng-if="boardCell.content.hasPiece" ng-src="chesstest/images/{{boardCell.content.cellImage}}" />
+        </td>
+    </tr>
+</table>
+<script type="text/javascript">
+$(function() {
+  $("#chessTableStyling").height($("#chessTableStyling").width());
+});
+$(window).resize(function() {
+   $("#chessTableStyling").height($("#chessTableStyling").width());
+});
+</script>

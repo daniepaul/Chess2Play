@@ -1,0 +1,31 @@
+<div class="panel">
+  <div class="panel-heading customHeading2"><span class="glyphicon glyphicon-comment"></span> Chat</div>
+  <div class="panel-body msg_container_base">
+      <div ng-repeat="message in messages">
+        <div class="row msg_container" ng-class="{true:'base_sent', false:'base_receive'}[message.dir == 'sent']" >
+          <div class="col-md-2 col-xs-2 avatar" ng-if="message.dir != 'sent'">
+            <img src="images/avatar.png" class="img-responsive"/>
+          </div>
+          <div class="col-md-10 col-xs-10">
+            <div class="messages msg_sent">
+              <p>{{message.text}}</p>
+              <time datetime="{{message.time">{{message.username}} • {{message.time}}</time>
+            </div>
+          </div>
+          <div class="col-md-2 col-xs-2 avatar" ng-if="message.dir == 'sent'">
+            <img src="images/avatar2.png" class="img-responsive"/>
+          </div>
+        </div>
+    </div>
+    <a id="chatBottom"></a>
+  </div>
+  <form ng-submit="sendchat()">
+  <div class="panel-footer">
+    <div class="input-group">
+      <input id="btn-input" type="text" ng-model="newMessage" class="form-control input-sm chat_input" placeholder="Write your message here..." />
+      <span class="input-group-btn">
+      <button class="btn btn-primary btn-sm" id="btn-chat">Send</button>
+      </span> </div>
+  </div>
+  </form>
+</div>

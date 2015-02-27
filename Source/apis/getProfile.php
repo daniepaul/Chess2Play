@@ -8,12 +8,12 @@ echo '{';
 if(isset($_REQUEST['userid']))
 {
 	$userid = $_REQUEST['userid'];
-	$profileQuery=mysqli_query($con,"select a.*, (select SUM(playedgame) from userpoints where userpoints.userid=a.userid) as playedgame, (select SUM(wongame) from userpoints where userpoints.userid=a.userid) as wongame, (select SUM(drawgame) from userpoints where userpoints.userid=a.userid) as drawgame, (select SUM(losegame) from userpoints where userpoints.userid=a.userid) as losegame, (select SUM(points) from userpoints where userpoints.userid=a.userid) as points from userprofile as a where a.userid='".$userid."'");
+	$profileQuery=mysqli_query($con,"select a.*, (select SUM(playedgame) from userpoints where userpoints.userid=a.userid) as playedgame, (select SUM(wongame) from userpoints where userpoints.userid=a.userid) as wongame, (select SUM(drawgame) from userpoints where userpoints.userid=a.userid) as drawgame, (select SUM(losegame) from userpoints where userpoints.userid=a.userid) as losegame, (select SUM(points) from userpoints where userpoints.userid=a.userid) as points from userprofile as a where a.userid='".$userid."' or a.username='".$userid."'");
 
 	if(mysqli_num_rows($profileQuery) > 0)
 	{
 		$profileRow = mysqli_fetch_assoc($profileQuery);
-
+		$userloggedin = (isset($_SESSION['userid']) && $_SESSION['userid'] == $profileRow['userid']) ? 'true' : 'false';
 					echo '"code" : 200,';
 					echo '"status" : "Profile Found",';
 					echo '"user" : {';
@@ -26,7 +26,8 @@ if(isset($_REQUEST['userid']))
 					echo '	"wonGames" : "'.$profileRow['wongame'].'",';
 					echo '	"drawnGames" : "'.$profileRow['drawgame'].'",';
 					echo '	"lostGames" : "'.$profileRow['losegame'].'",';
-					echo '	"totalPoints" : "'.$profileRow['points'].'"';
+					echo '	"totalPoints" : "'.$profileRow['points'].'",';
+					echo '  "LoggedIn" : "'.$userloggedin.'"';
 					echo '}';
 	}
 	else

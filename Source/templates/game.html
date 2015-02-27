@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+      <div class="col-md-5">
+          <div class="panel">
+            <div class="panel-heading customHeading">{{WhitePlayer}}</b>&nbsp;Vs&nbsp;<b>{{BlackPlayer}}</b></div>
+                <chess-game gameid="13" userid="1" opponentid="2"></chess-game>
+          </div>
+      </div>
+      <div class="col-md-4">
+            	<chess-chat game="13" userid="1"></chess-chat>
+      </div>
+      <div class="col-md-3">
+  <div class="panel">
+    <div class="panel-heading customHeading3">Game Details</div>
+    <table class="table table-striped">
+      <tr>
+        <td>Your Color<span class="glyphicon-blackPawn"></span></td>
+        <td><?php if($playercolor=="w"){echo "White";}else{echo "Black";}?></td>
+      </tr>
+      <tr>
+        <td>Play Status</td>
+        <td><div id="displayStatus"></div></td>
+      </tr>
+      <tr>
+        <td colspan="2"><a class="btn btn-primary" href="#" onClick="return confirmSubmit1()" role="button">Request Draw</a> <a class="btn btn-primary" href="test.php?action=cancel" onClick="return confirmSubmit()" role="button">Resign</a></td>
+      </tr>
+    </table>
+    <div class="panel-heading customHeading3">Game History</div>
+    <div class="panel-body">
+      <div style="word-spacing:20px;" id="displayNotation"></div>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+<div ng-controller="GameStateCtrl"></div>
+<script type="text/javascript">
+$('body').scrollspy({ target: '.customHeading' })
+</script>

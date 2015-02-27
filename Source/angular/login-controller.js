@@ -1,7 +1,8 @@
-app.controller('UserLoginCtrl', function($scope, $http, $window) {
+app.controller('UserLoginCtrl', function($scope, $http, $window, $location) {
 	$scope.username = "";
 	$scope.password = "";
 	$scope.loggedIn = false;
+	$scope.profileUrl = "#/profile";
 	
 	$scope.login = function(){
 	  $http({
@@ -14,7 +15,9 @@ app.controller('UserLoginCtrl', function($scope, $http, $window) {
 			if(data.code == 200)
 			{
 				$scope.loggedIn = true;
-				$window.location.href = 'profile.php';
+				$scope.profileUrl = '#/profile/'+data.user.username;
+				$('#myModal').modal('hide');
+				$location.path('/profile/'+data.user.username);
 			}
 			else
 			{
@@ -25,4 +28,12 @@ app.controller('UserLoginCtrl', function($scope, $http, $window) {
 		  // log error
 		});
 	};
+});
+
+app.directive('userLogin', function(){
+	return{
+		restrict : 'E',
+		templateUrl : 'templates/useraccess.html',
+		controller : 'UserLoginCtrl'
+	}
 });

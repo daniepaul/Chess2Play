@@ -1,6 +1,6 @@
-app.controller('UserProfileCtrl', function($scope, $http) {
+app.controller('UserProfileCtrl', function($scope, $http, $routeParams) {
 	$scope.getData = function(){
-	  $http.get('apis/getProfile.php?userid='+profileId).
+	  $http.get('apis/getProfile.php?userid='+$routeParams.userId).
 		success(function(data, status, headers, config) {
 			if(data.code == 200)
 			{

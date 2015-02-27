@@ -123,7 +123,7 @@ if(isset($_SESSION['userid']) && isset($_SESSION['gameid']))
 			}
 		}
 		
-		if(mysql_affected_rows($updatequit) > 0)
+		if(mysqli_affected_rows($con) > 0)
 		{
 			echo '"code" : 200,';
 			echo '"status" : "Draw request cleared!"';	

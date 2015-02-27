@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 echo '{';
 ?>
 <?php
-if(isset($_SESSION['userid']) && isset($_SESSION['gameid']))
+if(isset($_SESSION['userid']) && isset($_REQUEST['gameid']))
 {
 	$gameid1=$_REQUEST['gameid'];
 	$usrid=$_SESSION['userid'];

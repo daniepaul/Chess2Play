@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>Chess2Play - Two player chess application</title>
+<meta name="generator" content="Bootply" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/font-awesome.min.css" rel="stylesheet">
+<!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link href="css/styles.css" rel="stylesheet">
+<link href="css/boardStyles.css" rel="stylesheet" />
+<link href="css/chatStyle.css" rel="stylesheet" />
+<script src="js/jquery.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/angular-route.min.js"></script>
+<script src="js/bootbox.min.js"></script>
+<script src="angular/chess-app.js"></script>
+<script src="angular/login-controller.js"></script>
+<script src="angular/activeUser-controller.js"></script>
+<script src="angular/userprofile-controller.js"></script>
+<script type="text/javascript">
+var gameId = 13;
+</script>
+<script src="angular/chessgame-controller.js"></script>
+<script src="angular/chesschat-controller.js"></script>
+<script src="angular/gameState-controller.js"></script>
+</head>
+<body ng-app="ChessApp">
+<nav class="navbar navbar-static">
+  <div class="container">
+    <div class="navbar-header"> <a class="navbar-brand" href="#/"><b>Chess2Play</b></a> <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="glyphicon glyphicon-chevron-down"></span> </a> </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="#/about">About Chess2Play</a></li>
+        <li><a href="http://www.daniepaul.com/" target="_blank">Daniepaul.com</a></li>
+      </ul>
+      <user-login></user-login>
+    </div>
+  </div>
+</nav>
+<!-- /.navbar -->
+<div ng-view> </div>
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-right">
+        <h5>©daniepaul.com 2015<br/>
+          Theme by <a href="http://www.bootply.com/templates" target="_blank">Bootply.com</a></h5>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- script references --> 
+<script src="js/bootstrap.min.js"></script> 
+<script src="js/scripts.js"></script>
+</body>
+</html>

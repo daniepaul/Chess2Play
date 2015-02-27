@@ -5,66 +5,8 @@ include_once("apis/dbopen.php");
 $userid=$_SESSION['userid'];
 if($userid == "")
 {
-header("Location:../index.php");
+	header("Location:index.php");
 }
-$gameplayed1=mysql_query("select playedgame,wongame,drawgame,losegame,points from userpoints where userid='$userid'");
-$gameplayed=mysql_fetch_assoc($gameplayed1);
-$display=mysql_query("select gameid,whitePlayer,blackPlayer,whiteRequest,blackRequest from game where (whitePlayer='$userid' or blackPlayer='$userid') and gameStatus='A'");
-$diplayrow=mysql_fetch_assoc($display);
-$uid=$diplayrow['whitePlayer'];
-$uid1=$diplayrow['blackPlayer'];
-$inviteid=$diplayrow['gameid'];
-$whitereg=$diplayrow['whiteRequest'];
-$blackreg=$diplayrow['blackRequest'];
-$_SESSION['gameid']=$inviteid;
-$fname = "match".$inviteid.".txt";
-if($uid != $userid)
-{
-$displayopp=mysql_query("select userid,username from userprofile where userid='$uid'");
-$playercolor = "w";
-}
-else
-{
-$displayopp=mysql_query("select userid,username from userprofile where userid='$uid1'");
-$playercolor = "b";
-}
-$diplayrowopp=mysql_fetch_assoc($displayopp);
-$chatterid=$diplayrowopp['userid'];
-if($userid>$chatterid)
-{
-$room1=$chatterid.'_'.$userid;
-}
-else
-{
-$room1=$userid.'_'.$chatterid;
-}
-
-//quit from the game
-if($_REQUEST['action'] == "cancel")
-{
-$requestquit="update game set ";
-if($uid == $userid)
-{
-if($blackreg=='N')
-{
-$updatepoints=mysql_query("update userpoints set losegame=losegame+1 where userid='$uid'");
-$updateopppoints=mysql_query("update userpoints set wongame=wongame+1,points=points+2 where userid='$uid1'");
-$requestquit1=$requestquit."whiteRequest='Q',gameStatus='F',won='$uid1' where gameid='$inviteid'";
-}
-}
-else
-{
-if($whitereg=='N')
-{
-$updatepoints=mysql_query("update userpoints set losegame=losegame+1 where userid='$uid1'");
-$updateopppoints=mysql_query("update userpoints set wongame=wongame+1,points=points+2 where userid='$uid'");
-$requestquit1=$requestquit."blackRequest='Q',gameStatus='F',won='$uid' where gameid='$inviteid'";
-}
-}
-mysql_query($requestquit1);
-header("Location:../livechess.php");
-}
-
 ?>
 <script src="js/ajax/ajaxchess.js"></script>
 <script src="js/bootbox.min.js"></script>
@@ -841,28 +783,7 @@ for($j=8; $j>= 1; $j--) { ?>
     <img src="chesstest/images/close.png" style="display:none" /> <img src="chesstest/images/minimize.png" style="display:none" /> <img src="chesstest/smileys/mini_smile.gif" style="display:none" />
   </div>
 </div>
-<div class="col-md-3">
-  <div class="panel">
-    <div class="panel-heading customHeading3">Game Details</div>
-    <table class="table table-striped">
-      <tr>
-        <td>Your Color</td>
-        <td><?php if($playercolor=="w"){echo "White";}else{echo "Black";}?></td>
-      </tr>
-      <tr>
-        <td>Play Status</td>
-        <td><div id="displayStatus"></div></td>
-      </tr>
-      <tr>
-        <td colspan="2"><a class="btn btn-primary" href="#" onClick="return confirmSubmit1()" role="button">Request Draw</a> <a class="btn btn-primary" href="test.php?action=cancel" onClick="return confirmSubmit()" role="button">Resign</a></td>
-      </tr>
-    </table>
-    <div class="panel-heading customHeading3">Game History</div>
-    <div class="panel-body">
-      <div style="word-spacing:20px;" id="displayNotation"></div>
-    </div>
-  </div>
-</div>
+
 <script type="text/javascript">initGame();</script>
 <div id="noneid" align="center" style="color:#FF0000; font-weight:bold"></div>
 <?php
