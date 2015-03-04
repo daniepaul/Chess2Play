@@ -1,6 +1,7 @@
 <?php
 include_once("../config.php");
 include_once("dbopen.php");
+include_once("../libs/smileysComposer.php");
 header('Content-Type: application/json');
 echo '{';
 ?>
@@ -9,8 +10,8 @@ if(isset($_REQUEST['userid']) && isset($_REQUEST['gameid']) && isset($_REQUEST['
 {
 	$userid = $_REQUEST['userid'];
 	$gameid = $_REQUEST['gameid'];
-	$message = $_REQUEST['message'];
-	$username = $_REQUEST['message'];
+	$message = htmlentities($_REQUEST['message'], ENT_QUOTES);
+	$username =  $_REQUEST['message'];
 
 	if (!mysqli_query($con,"INSERT INTO chatting (send_id,text,room) VALUES ('$userid','$message','$gameid')")) 
 	{
@@ -24,7 +25,7 @@ if(isset($_REQUEST['userid']) && isset($_REQUEST['gameid']) && isset($_REQUEST['
 		echo '"messages" : [';
 			echo '{';
 			echo '  "dir" : "sent",';
-			echo '  "text" : "'.$message.'",';
+			echo '  "text" : "'.insertsmiley($message).'",';
 			echo '  "username" : "me",';
 			echo '  "time" : "'.date('h:i a', time()).'"';
 			echo '}';

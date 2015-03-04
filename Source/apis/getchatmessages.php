@@ -1,6 +1,7 @@
 <?php
 include_once("../config.php");
 include_once("dbopen.php");
+include_once("../libs/smileysComposer.php");
 header('Content-Type: application/json');
 echo '{';
 ?>
@@ -30,7 +31,7 @@ if(isset($_REQUEST['userid']) && isset($_REQUEST['gameid']))
 				
 			echo '{';
 			echo '  "dir" : "'.(($row["send_id"] == $userid) ? 'sent' : 'recieved').'",';
-			echo '  "text" : "'.$row["text"].'",';
+			echo '  "text" : "'.insertsmiley($row["text"]).'",';
 			echo '  "username" : "'.(($row["send_id"] == $userid) ? 'me' : $row["username"]).'",';
 			echo '  "time" : "'.$row["time"].'"';
 			echo '}';

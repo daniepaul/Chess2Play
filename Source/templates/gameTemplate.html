@@ -5,7 +5,7 @@
     <div class="col-md-5">
       <div class="panel">
         <div class="panel-heading customHeading">{{game.whitePlayer}} Vs {{game.blackPlayer}}</div>
-        <chess-game gameid="{{gameid}}" userid="{{userid}}" opponentid="{{opponentuserid}}" mycolor="{{game.myColorCode}}" notations="displaynotations"></chess-game>
+        <chess-game gameid="{{gameid}}" userid="{{userid}}" opponentid="{{opponentuserid}}" mycolor="{{game.myColorCode}}"></chess-game>
       </div>
     </div>
     <div class="col-md-4">
@@ -31,13 +31,8 @@
           </tr>
         </table>
         <div class="panel-heading customHeading3">Game History</div>
-        <div class="panel-body" style="max-height:200px; overflow-y:scroll">
-          	<table class="table table-striped">
-            	<tr ng-repeat="notation in displaynotations | reverse:'w'">
-                	<td>{{notation.whiteNotation}}</td>
-                    <td>{{notation.blackNotation}}</td>
-                </tr>
-           </table>
+        <div class="panel-body">
+          <div style="word-spacing:20px;">{{notations}}</div>
         </div>
       </div>
     </div>

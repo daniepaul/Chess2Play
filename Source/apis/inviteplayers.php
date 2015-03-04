@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 echo '{';
 ?>
 <?php
-if(isset($_SESSION['userid']) && isset($_SESSION['opid']))
+if(isset($_REQUEST['userid']) && isset($_REQUEST['opid']))
 {
 	$userid = $_REQUEST['userid'];
 	$opponentuserid = $_REQUEST['opid'];
@@ -14,25 +14,30 @@ if(isset($_SESSION['userid']) && isset($_SESSION['opid']))
 	$selectinvitecount=mysqli_num_rows($selectinvite);
 	
 	if($selectinvitecount <= 0)
-	{
-		$insertinvite=mysqli_query($con,"insert into game (whitePlayer,blackPlayer,gameStatus,datePlayed) values('".$userid."','".$opponentuserid."','I',now())");	
-		if(mysql_affected_rows($insertinvite) > 0)
+	{	
+		if(!mysqli_query($con,"insert into game (whitePlayer,blackPlayer,gameStatus,datePlayed) values('".$userid."','".$opponentuserid."','I',now())"))
 		{
-			echo '"code" : 200,';
-			echo '"status" : "Game drawn!",';
-			echo '"nextUrl" : "livechess.php?opid='.$opponentuserid.'&userid='.$userid.'"';	
+			echo '"code" : 503,';
+			echo '"status" : "Error occured while sending the game invite. Please try again."';	
 		}
 		else
 		{
-			echo '"code" : 503,';
-			echo '"status" : "Error occured while sending the draw request. Please try again."';	
+			$gameid = mysqli_insert_id($con);
+			echo '"code" : 200,';
+			echo '"status" : "Invited for the game!",';
+			echo '"gameid" : "'.$gameid.'",';
+			echo '"userid" : "'.$userid.'",';
+			echo '"opponentid" : "'.$opponentuserid.'"';	
 		}
 	}
 	else
 	{
-		echo '"code" : 200,';
-		echo '"status" : "Game drawn!",';
-		echo '"nextUrl" : "livechess.php?&userid='.$userid.'"';	
+		$row = mysqli_fetch_array($selectinvite);
+		echo '"code" : 201,';
+		echo '"status" : "Joining already existing invite",';
+		echo '"gameid" : "'.$row["gameid"].'",';
+		echo '"userid" : "'.$userid.'",';
+		echo '"opponentid" : "'.$opponentuserid.'",';	
 	}
 }
 else

@@ -1,0 +1,78 @@
+@font-face {
+  font-family: 'dpchaticons';
+  src: url('../fonts/dpchaticons.eot?75339227');
+  src: url('../fonts/dpchaticons.eot?75339227#iefix') format('embedded-opentype'),
+       url('../fonts/dpchaticons.woff?75339227') format('woff'),
+       url('../fonts/dpchaticons.ttf?75339227') format('truetype'),
+       url('../fonts/dpchaticons.svg?75339227#dpchaticons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'dpchaticons';
+    src: url('../font/dpchaticons.svg?75339227#dpchaticons') format('svg');
+  }
+}
+*/
+ 
+ [class^="dpchaticons-"]:before, [class*=" dpchaticons-"]:before {
+  font-family: "dpchaticons";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+ 
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+ 
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+     
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+ 
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+ 
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+ 
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+ 
+.dpchaticons-emo-wink:before { content: '\e800'; } /* '' */
+.dpchaticons-emo-wink2:before { content: '\e801'; } /* '' */
+.dpchaticons-emo-unhappy:before { content: '\e802'; } /* '' */
+.dpchaticons-emo-sleep:before { content: '\e803'; } /* '' */
+.dpchaticons-emo-thumbsup:before { content: '\e804'; } /* '' */
+.dpchaticons-emo-devil:before { content: '\e805'; } /* '' */
+.dpchaticons-emo-surprised:before { content: '\e806'; } /* '' */
+.dpchaticons-emo-tongue:before { content: '\e807'; } /* '' */
+.dpchaticons-emo-coffee:before { content: '\e808'; } /* '' */
+.dpchaticons-emo-sunglasses:before { content: '\e809'; } /* '' */
+.dpchaticons-emo-displeased:before { content: '\e80a'; } /* '' */
+.dpchaticons-emo-beer:before { content: '\e80b'; } /* '' */
+.dpchaticons-emo-grin:before { content: '\e80c'; } /* '' */
+.dpchaticons-emo-angry:before { content: '\e80d'; } /* '' */
+.dpchaticons-emo-saint:before { content: '\e80e'; } /* '' */
+.dpchaticons-emo-cry:before { content: '\e80f'; } /* '' */
+.dpchaticons-emo-shoot:before { content: '\e810'; } /* '' */
+.dpchaticons-emo-squint:before { content: '\e811'; } /* '' */
+.dpchaticons-emo-laugh:before { content: '\e812'; } /* '' */
+.dpchaticons-emo-happy:before { content: '\e813'; } /* '' */
+.dpchaticons-spin5:before { content: '\e814'; } /* '' */
+.dpchaticons-spin1:before { content: '\e815'; } /* '' */
+.dpchaticons-spin2:before { content: '\e816'; } /* '' */
+.dpchaticons-spin3:before { content: '\e817'; } /* '' */
+.dpchaticons-spin6:before { content: '\e818'; } /* '' */
+.dpchaticons-spin4:before { content: '\e819'; } /* '' */

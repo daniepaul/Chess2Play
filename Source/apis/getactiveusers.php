@@ -30,32 +30,35 @@ if (mysqli_num_rows($getloggedusers) > 0)
 		$getinvitedusercount=mysqli_num_rows($getinviteduser);
 		if($getinvitedusercount==0)
 	 	{
-	 	$getuserstatus=mysqli_query($con,"select * from game where (whitePlayer='".$oppuserid."' or blackPlayer='".$oppuserid."') and gameStatus='A' and whiteRequest='N' and blackRequest='N'");
+	 	$getuserstatus=mysqli_query($con,"select * from game where (whitePlayer='".$oppuserid."' or blackPlayer='".$oppuserid."') and gameStatus='A' and whiteRequest='X' and blackRequest='X'");
 	 	$getuserstatuscount=mysqli_num_rows($getuserstatus);
 	 	if($getuserstatuscount==1)
 	 	{
+			$row = mysqli_fetch_array($getuserstatus);
 			echo '"status" : "Playing",';
-			echo '"nextUrl" : ""';			
+			echo '"gameId" : "'.$row["gameid"].'"';			
 		}
 		else
 		{
-		$getoppinvite=mysqli_query($con,"select * from game where whitePlayer='".$oppuserid."' and blackPlayer='".$userid."' and gameStatus='I' and whiteRequest='N' and blackRequest='N'");
+		$getoppinvite=mysqli_query($con,"select * from game where whitePlayer='".$oppuserid."' and blackPlayer='".$userid."' and gameStatus='I'");
 		if(mysqli_num_rows($getoppinvite)==1)
 		{
+			$row = mysqli_fetch_array($getoppinvite);
 			echo '"status" : "Requested",';
-			echo '"nextUrl" : "game.php?userid='.$userid.'&oppuid='.$getloggedrow['userid'].'"';
+			echo '"gameId" : "'.$row["gameid"].'"';
 		}
 		else
 		{
 			echo '"status" : "Available",';
-			echo '"nextUrl" : ""';			
+			echo '"gameId" : ""';			
 		}
 		}
 		}
 		else
 		{
+			$row = mysqli_fetch_array($getinviteduser);
 			echo '"status" : "Invited",';
-			echo '"nextUrl" : ""';
+			echo '"gameId" : "'.$row["gameid"].'"';
 		}
 		echo '}';
 	}

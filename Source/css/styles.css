@@ -256,5 +256,19 @@ footer {
 	position:relative; margin-left: auto; margin-right: auto; width: 70%;
 }
 
+.vertical-center {
+  min-height: 90%;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+}
+
+.dropShadowOnText{
+  text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+.noShadowOnText{
+  text-shadow: black 0em 0em 0em;
+}
 
 /* end custom theme */

@@ -6,12 +6,14 @@ app.directive("chessChat", function(){
             game: "@game",
             userid: "@userid"
         },
-		controller : function($scope, $http, $location, $timeout, $anchorScroll) {
+		controller : function($scope, $http, $location, $timeout, $anchorScroll, $sce) {
 			$scope.messages = [];
 			$scope.newMessage = "";
 			$scope.userid = "";
 			$scope.game = "";
 			$scope.sendchat = function(){
+				if($scope.newMessage.trim() == "")
+					return;
 				url = 'apis/sendchatmessage.php?userid='+$scope.userid+'&gameid='+$scope.game+'&message='+$scope.newMessage;
 				$http.get(url).
 					success(function(data, status, headers, config) {
@@ -19,7 +21,9 @@ app.directive("chessChat", function(){
 						{	
 							for(i = 0; i < data.messages.length ; i++)
 							{
-								$scope.messages.push(data.messages[i]);
+								var localMessage = data.messages[i];
+								localMessage.htmlSafe = $sce.trustAsHtml(localMessage.text);
+								$scope.messages.push(localMessage);
 							}
 							$scope.newMessage = "";
 							$scope.gotoBottom();
@@ -40,7 +44,9 @@ app.directive("chessChat", function(){
 						{	
 							for(i = 0; i < data.messages.length ; i++)
 							{
-								$scope.messages.push(data.messages[i]);
+								var localMessage = data.messages[i];
+								localMessage.htmlSafe = $sce.trustAsHtml(localMessage.text);
+								$scope.messages.push(localMessage);
 							}
 							$scope.gotoBottom();
 						}

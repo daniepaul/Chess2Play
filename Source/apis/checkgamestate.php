@@ -16,7 +16,17 @@ if(isset($_SESSION['userid']) && isset($_REQUEST['gameid']))
 	$whitereq1=$chkuserstatusrow['whiteRequest'];
 	$blackreq1=$chkuserstatusrow['blackRequest'];
 	echo '"code" : 200,';
-	if($chkuserstatusrow['gameStatus'] == "F")
+	if($chkuserstatusrow['gameStatus'] == "I")
+	{
+		echo '"status" : "Waiting for the game to begin. Please stand by for your opponent to arrive.",';	
+		echo '"stateCode" : "I"';
+	}
+	else if($chkuserstatusrow['gameStatus'] == "A")
+	{
+		echo '"status" : "Start your game.",';	
+		echo '"stateCode" : "A"';
+	}
+	else if($chkuserstatusrow['gameStatus'] == "F")
 	{
 		echo '"status" : "Congratulations! You won the game.",';	
 		echo '"stateCode" : "F"';

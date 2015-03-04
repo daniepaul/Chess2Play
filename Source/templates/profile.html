@@ -30,8 +30,8 @@
                         <span ng-switch-when="Requested" class="label label-warning">{{user.status}}</span>
                     </td>
                     <td ng-switch="user.status">
-                    	<a ng-switch-when="Available" class="btn btn-info btn-xs" href="#" role="button">Invite for a game</a>
-                        <a ng-switch-when="Requested" class="btn btn-info btn-xs" href="{{user.nextUrl}}" role="button">Accept Invite</a>
+                    	<a ng-switch-when="Available" class="btn btn-info btn-xs" ng-click="inviteForGame(profile.userId,user.userid)" role="button">Invite for a game</a>
+                        <a ng-switch-when="Requested" class="btn btn-info btn-xs" ng-click="acceptGame(user.gameId)" role="button">Accept Invite</a>
                     </td>
                 </tr>
             </table> 

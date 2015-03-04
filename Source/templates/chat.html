@@ -8,7 +8,7 @@
           </div>
           <div class="col-md-10 col-xs-10">
             <div class="messages msg_sent">
-              <p>{{message.text}}</p>
+              <p class="the-icons" ng-bind-html="message.htmlSafe"></p>
               <time datetime="{{message.time">{{message.username}} • {{message.time}}</time>
             </div>
           </div>

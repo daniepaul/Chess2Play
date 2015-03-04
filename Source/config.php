@@ -4,17 +4,17 @@ ob_start();
 global $configuration;
 date_default_timezone_set("Asia/Calcutta");
 
-//$configuration['host'] = "mysql.daniepaul.com";
-//$configuration['user'] = "daniepaul";
-//$configuration['pass'] = "dan9iep8aul7";
-//$configuration['db'] = "chessgame";
-//$configuration['timezone'] = '+5:30';
-
-$configuration['host'] = "localhost";
-$configuration['user'] = "root";
-$configuration['pass'] = "";
-$configuration['db'] = "chess";
+$configuration['host'] = "mysql.daniepaul.com";
+$configuration['user'] = "daniepaul";
+$configuration['pass'] = "dan9iep8aul7";
+$configuration['db'] = "chessgame";
 $configuration['timezone'] = '+5:30';
+
+//$configuration['host'] = "localhost";
+//$configuration['user'] = "root";
+//$configuration['pass'] = "";
+//$configuration['db'] = "chess";
+//$configuration['timezone'] = '+5:30';
 
 //Generic Definations
 define("SITE_NAME", "Chess Game");
@@ -25,7 +25,7 @@ define("DESCRIPTION", "2PlayerChess is a two player chess game. Developed by dan
 define("WEBMASTER","services@daniepaul.com");
 
 //Location Definations
-define("BASEDIR","http://localhost/chess2/");
+define("BASEDIR","http://chessgame.daniepaul.com/");
 define("FILE_UPLOAD_LOCATION",BASEDIR."uploadFile/");
 define("IMAGEPATH",BASEDIR."images/");
 
