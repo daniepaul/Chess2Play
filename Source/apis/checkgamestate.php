@@ -16,22 +16,7 @@ if(isset($_SESSION['userid']) && isset($_REQUEST['gameid']))
 	$whitereq1=$chkuserstatusrow['whiteRequest'];
 	$blackreq1=$chkuserstatusrow['blackRequest'];
 	echo '"code" : 200,';
-	if($chkuserstatusrow['gameStatus'] == "I")
-	{
-		echo '"status" : "Waiting for the game to begin. Please stand by for your opponent to arrive.",';	
-		echo '"stateCode" : "I"';
-	}
-	else if($chkuserstatusrow['gameStatus'] == "A")
-	{
-		echo '"status" : "Start your game.",';	
-		echo '"stateCode" : "A"';
-	}
-	else if($chkuserstatusrow['gameStatus'] == "F")
-	{
-		echo '"status" : "Congratulations! You won the game.",';	
-		echo '"stateCode" : "F"';
-	}
-	else if(($usrid==$uuiid) && ($blackreq1=='Q'))
+	if(($usrid==$uuiid) && ($blackreq1=='Q'))
 	{
 		echo '"status" : "You Won! Your opponent quit the game.",';	
 		echo '"stateCode" : "0"';		
@@ -77,7 +62,32 @@ if(isset($_SESSION['userid']) && isset($_REQUEST['gameid']))
 		echo '"status" : "Your request to draw the game is rejected. Continue playing.",';	
 		echo '"stateCode" : "3"';	
 	}
-	else
+	else if(($usrid==$uuiid) && ($whitereq1=='D'))
+	{
+		echo '"status" : "You requested the game to be drawn. Waiting for your opponent to respond.",';	
+		echo '"stateCode" : "D"';	
+	}
+	else if(($usrid==$uuiid1) && ($blackreq1=='D'))
+	{
+		echo '"status" : "You requested the game to be drawn. Waiting for your opponent to respond.",';	
+		echo '"stateCode" : "D"';	
+	}
+	else if($chkuserstatusrow['gameStatus'] == "I")
+	{
+		echo '"status" : "Waiting for the game to begin. Please stand by for your opponent to arrive.",';	
+		echo '"stateCode" : "I"';
+	}
+	else if($chkuserstatusrow['gameStatus'] == "A")
+	{
+		echo '"status" : "Start your game.",';	
+		echo '"stateCode" : "A"';
+	}
+	else if($chkuserstatusrow['gameStatus'] == "F")
+	{
+		echo '"status" : "Congratulations! You won the game.",';	
+		echo '"stateCode" : "F"';
+	}
+	else 
 	{
 		echo '"status" : "Unknown state.",';	
 		echo '"stateCode" : "4"';	

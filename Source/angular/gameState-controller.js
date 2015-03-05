@@ -6,15 +6,24 @@ app.controller('GameStateCtrl', function($scope, $http, $timeout, $routeParams, 
 	$scope.game = {};
 	$scope.displaynotations = [];
 	$scope.status = "";
-	$scope.opponentuserid = "2";
+	$scope.opponentuserid = "";
 	$scope.gameStarted = false;
 	
 	$scope.resign = function() {
-		$scope.showStatus("You requested the game to be drawn. Waiting for your opponent to response.", false);
+		$scope.updateRequest('apis/resigngame.php?userid='+$scope.userid+'&gameid='+$scope.gameid+'&opponentid='+$scope.opponentuserid,'/profile/'+$scope.userid);
 	};
 	
 	$scope.requestDraw = function() {
-		$scope.showStatus("You requested the game to be drawn. Waiting for your opponent to response.", true);
+		$http.get('apis/drawgame.php?userid='+$scope.userid+'&gameid='+$scope.gameid+'&game=draw').
+		success(function(data, status, headers, config) {
+			if(data.code != 200)
+			{
+				bootbox.alert(data.status);
+			}
+			else
+				$scope.showStatus("You requested the game to be drawn. Waiting for your opponent to respond.", true);
+		});
+		
 	};
 	
 	$scope.init = function() {
@@ -49,7 +58,8 @@ app.controller('GameStateCtrl', function($scope, $http, $timeout, $routeParams, 
 					//Game won
 					$scope.waitAjax = true;
 					bootbox.alert(data.status, function() {
-						$scope.navigate('/profile/'+$scope.userId);
+						legalGameQuit = true;
+						$scope.navigate('/profile/'+$scope.userid);
 					});
 				}
 				else if(data.stateCode == "1")
@@ -60,11 +70,11 @@ app.controller('GameStateCtrl', function($scope, $http, $timeout, $routeParams, 
 						if(result)
 						{
 							//accept draw
-							$scope.updateRequest('apis/drawgame.php?action=draw','/profile/'+$scope.userId);
+							$scope.updateRequest('apis/drawgame.php?userid='+$scope.userid+'&gameid='+$scope.gameid+'&action=draw','/profile/'+$scope.userid);
 						}
 						else
 						{
-							$scope.updateRequest('apis/drawgame.php?action=cancel','');
+							$scope.updateRequest('apis/drawgame.php?userid='+$scope.userid+'&gameid='+$scope.gameid+'&action=cancel','');
 							$scope.waitAjax = false;
 							$scope.intervalFunction();
 						}
@@ -74,16 +84,19 @@ app.controller('GameStateCtrl', function($scope, $http, $timeout, $routeParams, 
 				{
 					//Game drawn
 					$scope.waitAjax = true;
+					$scope.hideStatus(true);
 					bootbox.alert(data.status, function() {
-						$scope.navigate('/profile/'+$scope.userId);
-					});					
+						legalGameQuit = true;
+						$scope.navigate('/profile/'+$scope.userid);
+					});				
 				}
 				else if(data.stateCode == "3")
 				{
 					//Rejected drawn
 					$scope.waitAjax = true;
+					$scope.hideStatus(true);
 					bootbox.alert(data.status, function() {
-						$scope.updateRequest('apis/drawgame.php?action=clear','');
+						$scope.updateRequest('apis/drawgame.php?userid='+$scope.userid+'&gameid='+$scope.gameid+'&action=clear','');
 						$scope.waitAjax = false;
 						$scope.intervalFunction();
 					});
@@ -92,8 +105,10 @@ app.controller('GameStateCtrl', function($scope, $http, $timeout, $routeParams, 
 				{
 					//Game drawn
 					$scope.waitAjax = true;
+					$scope.hideStatus(true);
 					bootbox.alert(data.status, function() {
-					  $scope.navigate('/profile/'+$scope.userId);
+						legalGameQuit = true;
+					  $scope.navigate('/profile/'+$scope.userid);
 					});
 				}
 				else if(data.stateCode == "I")
@@ -115,6 +130,11 @@ app.controller('GameStateCtrl', function($scope, $http, $timeout, $routeParams, 
 						$scope.gameStarted = true;
 					}
 				}
+				else if(data.stateCode == "D")
+				{
+					$scope.waitAjax = false;
+					$scope.showStatus(data.status, true);
+				}
 			}
 		}).
 		error(function(data, status, headers, config) {
@@ -135,6 +155,9 @@ app.controller('GameStateCtrl', function($scope, $http, $timeout, $routeParams, 
   $scope.updateRequest = function(url, next){
 	  $http.get(url).
 		success(function(data, status, headers, config) {
+			if(next != "")
+				legalGameQuit = true;
+				
 			if(data.code != 200)
 			{
 				bootbox.alert(data.status, function() {
@@ -158,19 +181,30 @@ app.controller('GameStateCtrl', function($scope, $http, $timeout, $routeParams, 
 			$scope.hideStatus(blockPage);
 		}, 3000)
 	};
-  
+  	$scope.isBlockStatusVisible = false;
+	$scope.isStatusVisible = false;
 	$scope.showStatus = function(message, blockPage) {
 		$scope.statusMessage = message;
 		if(blockPage)
 		{
-			$('#statusModal').modal({
-			  keyboard: false,
-			  backdrop : 'static'
-			});
+			if(!$scope.isBlockStatusVisible)
+			{
+				$('#statusModal').modal({
+				  keyboard: false,
+				  backdrop : 'static'
+				});
+				$scope.isBlockStatusVisible = true;
+				$scope.isStatusVisible = false;
+			}
 		}
 		else
 		{
-			$('#statusNonModal').modal('toggle');
+			if(!$scope.isStatusVisible)
+			{
+				$('#statusNonModal').modal('toggle');
+				$scope.isBlockStatusVisible = false;
+				$scope.isStatusVisible = true;	
+			}
 		}
 	};
 	
@@ -178,11 +212,21 @@ app.controller('GameStateCtrl', function($scope, $http, $timeout, $routeParams, 
 		$scope.statusMessage = "";
 		if(blockPage)
 		{
-			$('#statusModal').modal('hide');
+			if($scope.isBlockStatusVisible)
+			{
+				$('#statusModal').modal('hide');
+				$scope.isBlockStatusVisible = false;
+				$scope.isStatusVisible = false;
+			}
 		}
 		else
 		{
-			$('#statusNonModal').modal('hide');
+			if($scope.isStatusVisible)
+			{
+				$('#statusNonModal').modal('hide');
+				$scope.isBlockStatusVisible = false;
+				$scope.isStatusVisible = false;
+			}
 		}
 	};
 

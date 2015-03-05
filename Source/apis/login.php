@@ -5,7 +5,24 @@ header('Content-Type: application/json');
 echo '{';
 ?>
 <?php
-if(isset($_REQUEST['username']) && isset($_REQUEST['password']))
+if(isset($_REQUEST['verifyLogin']))
+{
+	if(isset($_SESSION['userid']))
+	{
+		echo '"code" : 200,';
+		echo '"status" : "Login session available",';
+		echo '"user" : {';
+		echo ' 	"userId" : "'.$_SESSION['userid'].'",';
+		echo '	"username" : "'.$_SESSION['username'].'"';	
+		echo '}';
+	}
+	else
+	{
+		echo '"code" : 404,';
+		echo '"status" : "No login sessions available."';		
+	}
+}
+else if(isset($_REQUEST['username']) && isset($_REQUEST['password']))
 {
 	$username = $_REQUEST['username'];
 	$password = $_REQUEST['password'];
@@ -25,28 +42,20 @@ if(isset($_REQUEST['username']) && isset($_REQUEST['password']))
 		
 		if($logcount > 0)
 		{
-//			if( strtoupper($logrow["status"]) == "Y")
-//			{
-//				echo '"code" : 504,';
-//				echo '"status" : "User already logged in. Please close your previous session and try again."';
-//			}
-//			else
-//			{
-				$updatelog=mysqli_query($con,"update log set status='".$status."' where userid='".$userid."'");
+			$updatelog=mysqli_query($con,"update log set status='".$status."' where userid='".$userid."'");
 
-					$_SESSION['userid'] = $loginrow['userid'];
-					$_SESSION['username'] = $loginrow['username'];
-					
-					echo '"code" : 200,';
-					echo '"status" : "Login successful!!",';
-					echo '"user" : {';
-					echo ' 	"userId" : "'.$loginrow['userid'].'",';
-					echo '	"username" : "'.$loginrow['username'].'",';					
-					echo '	"email" : "'.$loginrow['email'].'",';
-					echo '	"gender" : "'.$loginrow['gender'].'",';
-					echo '	"country" : "'.$loginrow['country'].'"';
-					echo '}';
-//			}
+				$_SESSION['userid'] = $loginrow['userid'];
+				$_SESSION['username'] = $loginrow['username'];
+				
+				echo '"code" : 200,';
+				echo '"status" : "Login successful!!",';
+				echo '"user" : {';
+				echo ' 	"userId" : "'.$loginrow['userid'].'",';
+				echo '	"username" : "'.$loginrow['username'].'",';					
+				echo '	"email" : "'.$loginrow['email'].'",';
+				echo '	"gender" : "'.$loginrow['gender'].'",';
+				echo '	"country" : "'.$loginrow['country'].'"';
+				echo '}';
 		}
 		else
 		{

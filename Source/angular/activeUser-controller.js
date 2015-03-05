@@ -40,7 +40,7 @@ app.controller('ActiveUserCtrl', function($scope, $http, $timeout) {
 						$scope.users.splice(i,1);
 				}
 			}
-			else if(data.code == 404)
+			else
 				$scope.users = [];
 		}).
 		error(function(data, status, headers, config) {

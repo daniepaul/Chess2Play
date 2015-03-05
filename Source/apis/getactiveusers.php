@@ -63,12 +63,12 @@ if (mysqli_num_rows($getloggedusers) > 0)
 		echo '}';
 	}
 	echo ']';
-}
-else
-{
-	echo '"code" : 404,';
-	echo '"status" : "No Active users available."';	
-}
+	}
+	else
+	{
+		echo '"code" : 404,';
+		echo '"status" : "No Active users available."';	
+	}
 }
 else
 {

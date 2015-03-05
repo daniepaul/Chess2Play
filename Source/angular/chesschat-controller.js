@@ -66,10 +66,10 @@ app.directive("chessChat", function(){
 			$scope.intervalFunction(true);
 			
 			 $scope.gotoBottom = function() {
-				 $timeout(function() {
-					$location.hash('chatBottom');
-					$anchorScroll();
-				}, 1)
+				// $timeout(function() {
+//					$location.hash('chatBottom');
+//					$anchorScroll();
+//				}, 1)
 			};
 		}
 	}

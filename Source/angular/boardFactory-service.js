@@ -1,8 +1,31 @@
 app.factory('chessBoard', function chessBoardFactory() {
 	
+	var piece_Unicode_white = new Array("♙","♖","♘","♗","♕","♔");
+	var piece_Unicode_black = new Array("♟","♜","♞","♝","♛","♚");
+	
 	var buildArray = function(color,coin,i,j)
 	{
-		return { "color":color, "coin":coin, "i":i, "j":j };
+		var unicodeContentArray = piece_Unicode_white;
+		if(color == "b")
+		{
+			unicodeContentArray = piece_Unicode_black;	
+		}
+		var index = 0;
+		if(coin == "p")
+			index = 0;
+		else if(coin == "r")
+			index = 1;
+		else if(coin == "n")
+			index = 2;
+		else if(coin == "b")
+			index = 3;
+		else if(coin == "q")
+			index = 4;
+		else if(coin == "k")
+			index = 5;
+		else
+			index = 0;
+		return { "color":color, "coin":coin, "i":i, "j":j, "unicode" : unicodeContentArray[index] };
 	};
 	
 	//default positions
@@ -51,10 +74,11 @@ app.factory('chessBoard', function chessBoardFactory() {
 					name = "name='"+initializeCoin.color+"king'";
 				}
 				tempBoard[parseInt(initializeCoin.j)-1][parseInt(initializeCoin.i)-1].content.hasPiece = true;
-				tempBoard[parseInt(initializeCoin.j)-1][parseInt(initializeCoin.i)-1].content.cellImage = initializeCoin.color+initializeCoin.coin+".gif";
+				tempBoard[parseInt(initializeCoin.j)-1][parseInt(initializeCoin.i)-1].content.cellImage = initializeCoin.color+initializeCoin.coin+".png";
 				tempBoard[parseInt(initializeCoin.j)-1][parseInt(initializeCoin.i)-1].content.cellImageName = name;
 				tempBoard[parseInt(initializeCoin.j)-1][parseInt(initializeCoin.i)-1].content.coinColor = initializeCoin.color;
 				tempBoard[parseInt(initializeCoin.j)-1][parseInt(initializeCoin.i)-1].content.coinPiece = initializeCoin.coin;
+				tempBoard[parseInt(initializeCoin.j)-1][parseInt(initializeCoin.i)-1].content.unicode = initializeCoin.unicode;
 			}
 			
 			return tempBoard;

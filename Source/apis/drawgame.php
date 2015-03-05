@@ -5,10 +5,10 @@ header('Content-Type: application/json');
 echo '{';
 ?>
 <?php
-if(isset($_SESSION['userid']) && isset($_SESSION['gameid']))
+if(isset($_REQUEST['userid']) && isset($_REQUEST['gameid']))
 {
-	$userid = $_SESSION['userid'];
-	$gameid=$_SESSION['gameid'];
+	$userid = $_REQUEST['userid'];
+	$gameid=$_REQUEST['gameid'];
 	$usergamestatus=mysqli_query($con,"select * from game where gameid='$gameid'");
 	$usergamestatusrow=mysqli_fetch_assoc($usergamestatus);
 	$uuid=$usergamestatusrow['whitePlayer'];
@@ -17,19 +17,20 @@ if(isset($_SESSION['userid']) && isset($_SESSION['gameid']))
 	$blackreg=$usergamestatusrow['blackRequest'];
 	
 	//draw the game
-	if ($_REQUEST['game']=="draw") 
+	if (isset($_REQUEST['game']) && $_REQUEST['game']=="draw") 
 	{
 		$requestdraw="update game set ";
 		if($uuid != $userid)
 		{
-			$requestdraw1=$requestdraw."blackRequest='D' where gameid='$gameid'";
+			$requestdraw=$requestdraw."blackRequest='D' where gameid='$gameid'";
 		}
 		else
 		{
-			$requestdraw1=$requestdraw."whiteRequest='D' where gameid='$gameid'";
+			$requestdraw=$requestdraw."whiteRequest='D' where gameid='$gameid'";
 		}
-		$res = mysqli_query($con,$requestdraw1);
-		if(mysql_affected_rows($res) > 0)
+		//echo $requestdraw;
+		$res = mysqli_query($con,$requestdraw);
+		if(mysqli_affected_rows($con) > 0)
 		{
 			echo '"code" : 200,';
 			echo '"status" : "Draw request sent."';	
@@ -43,7 +44,7 @@ if(isset($_SESSION['userid']) && isset($_SESSION['gameid']))
 	
 	
 	//draw game
-	if($_REQUEST['action']=="draw")
+	if(isset($_REQUEST['action']) && $_REQUEST['action']=="draw")
 	{
 		$updatepoints=mysqli_query($con,"update userpoints set drawgame=drawgame+1,points=points+1 where userid='$uuid'");
 		$updateopppoints=mysqli_query($con,"update userpoints set drawgame=drawgame+1,points=points+1 where userid='$uuid1'");
@@ -62,7 +63,7 @@ if(isset($_SESSION['userid']) && isset($_SESSION['gameid']))
 			}
 		}
 		
-		if(mysql_affected_rows($updatequit) > 0)
+		if(mysqli_affected_rows($con) > 0)
 		{
 			echo '"code" : 200,';
 			echo '"status" : "Game drawn!",';
@@ -76,7 +77,7 @@ if(isset($_SESSION['userid']) && isset($_SESSION['gameid']))
 	}
 	
 	//reject draw
-	if($_REQUEST['action']=="cancel")
+	if(isset($_REQUEST['action']) && $_REQUEST['action']=="cancel")
 	{
 		if($userid==$uuid)
 		{
@@ -93,7 +94,7 @@ if(isset($_SESSION['userid']) && isset($_SESSION['gameid']))
 			}
 		}
 		
-		if(mysql_affected_rows($updatequit) > 0)
+		if(mysqli_affected_rows($con) > 0)
 		{
 			echo '"code" : 200,';
 			echo '"status" : "Draw request declined!"';	
@@ -106,20 +107,20 @@ if(isset($_SESSION['userid']) && isset($_SESSION['gameid']))
 	}
 	
 	//leave it as new game
-	if($_REQUEST['action']=="clear")
+	if(isset($_REQUEST['action']) && $_REQUEST['action']=="clear")
 	{
 		if($userid==$uuid)
 		{
 			if($whitereg=='K')
 			{
-			$updatequit=mysqli_query($con,"update game set whiteRequest='N' where gameid='$gameid'");
+			$updatequit=mysqli_query($con,"update game set whiteRequest='X' where gameid='$gameid'");
 			}
 		}
 		else
 		{
 			if($blackreg=='K')
 			{
-			$updatequit=mysqli_query($con,"update game set blackRequest='N' where gameid='$gameid'");
+			$updatequit=mysqli_query($con,"update game set blackRequest='X' where gameid='$gameid'");
 			}
 		}
 		

@@ -2,7 +2,8 @@
 <table class="table" id="chessTableStyling">
 	<tr ng-repeat="boardRow in board | reverse:mycolor">
     	<td ng-repeat="boardCell in boardRow | reverse:mycolor" width="12.5%" height="12.5%" class="chessCell {{boardCell.style}} {{boardCell.selectedClass}}" id="{{boardCell.cellid}}" valign="middle" align="center" ng-click="clickCell(boardCell)">
-        	<img class="img-responsive" height ="95%" ng-if="boardCell.content.hasPiece" ng-src="images/{{boardCell.content.cellImage}}" />
+        	<img class="img-responsive" height="90%" ng-if="boardCell.content.hasPiece" ng-src="images/{{boardCell.content.cellImage}}" />
+ 			<span ng-if="!boardCell.content.hasPiece"> </span>
         </td>
     </tr>
 </table>

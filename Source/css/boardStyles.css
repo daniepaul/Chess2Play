@@ -8,6 +8,8 @@
 	box-shadow:inset 0 0 0 1px #fff; -moz-box-shadow:inset 0 0 0 1px #fff; 
 	-webkit-box-shadow:inset 0 0 0 1px #fff;  text-align:center; 
 	vertical-align:middle; 
+	padding : 0px;
+	cursor:pointer;
 }
 #chessTableStyling tr:nth-child(odd) td:nth-child(even),
 #chessTableStyling tr:nth-child(even) td:nth-child(odd) { 
