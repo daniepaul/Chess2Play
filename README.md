@@ -1,2 +1,17 @@
-# 2PlayerChess
-2PlayerChess is a online chess game which works in JavaScript and php. The game uses a simple chat utility as well.
+# Chess 2 Play
+Chess 2 Play is a project initially created using javascript and CSS. The current game is an improved version build using Bootstrap and Angular.js. The backend conectivity is done using php.
+
+The game have provisions to play multiple games simultaniously. The state of the game is retained and could be retained at any time. Below are few notable improvements in this version,
+
+1. Replay the game to its latest state
+2. Ability to return back to the game
+3. View other player profiles to see their stats
+
+Demo to the tool in available in the below link,
+http://chessgame.daniepaul.com/
+
+Demo Users:
+| Username  | Password |
+| --------- | -------- |
+| user1     | user1    |
+| user2     | user2    |
