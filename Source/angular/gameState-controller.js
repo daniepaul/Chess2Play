@@ -8,9 +8,11 @@ app.controller('GameStateCtrl', function($scope, $http, $timeout, $routeParams, 
 	$scope.status = "";
 	$scope.opponentuserid = "";
 	$scope.gameStarted = false;
+	$scope.currentPlayColor = "w";
 	
 	$scope.resign = function() {
 		$scope.updateRequest('apis/resigngame.php?userid='+$scope.userid+'&gameid='+$scope.gameid+'&opponentid='+$scope.opponentuserid,'/profile/'+$scope.userid);
+		$scope.waitAjax = true;
 	};
 	
 	$scope.requestDraw = function() {

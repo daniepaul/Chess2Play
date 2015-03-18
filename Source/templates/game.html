@@ -20,10 +20,6 @@
             <td>{{game.myColor}}</td>
           </tr>
           <tr>
-            <td>Play Status</td>
-            <td>{{status}}</td>
-          </tr>
-          <tr>
             <td colspan="2">
                 <a class="btn btn-primary" ng-click="requestDraw()" role="button">Request Draw</a>
                 <a class="btn btn-primary" ng-click="resign()" role="button">Resign</a>
@@ -31,11 +27,11 @@
           </tr>
         </table>
         <div class="panel-heading customHeading3">Game History</div>
-        <div class="panel-body" style="max-height:200px; overflow-y:scroll">
+        <div class="panel-body" style="max-height:250px; overflow-y:scroll">
           	<table class="table table-striped">
             	<tr ng-repeat="notation in displaynotations | reverse:'w'">
-                	<td>{{notation.whiteNotation}}</td>
-                    <td>{{notation.blackNotation}}</td>
+                	<td><notation-display ng-if="notation.whiteNotation != ''" notation="{{notation.whiteNotation}}"></notation-display></td>
+                    <td><notation-display ng-if="notation.blackNotation != ''" notation="{{notation.blackNotation}}"></notation-display></td>
                 </tr>
            </table>
         </div>

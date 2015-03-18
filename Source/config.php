@@ -19,7 +19,7 @@ define("DESCRIPTION", "2PlayerChess is a two player chess game. Developed by dan
 define("WEBMASTER","services@daniepaul.com");
 
 //Location Definations
-define("BASEDIR","http://localhost/chess2game/");
+define("BASEDIR","http://localhost/chess2/");
 define("FILE_UPLOAD_LOCATION",BASEDIR."uploadFile/");
 define("IMAGEPATH",BASEDIR."images/");
 

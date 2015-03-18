@@ -21,6 +21,7 @@ app.directive('chessGame', function($timeout) {
 	controller : function($scope, $http, $timeout, chessBoard, boardRules) {
 	$scope.playerColor = "w";
 	$scope.PreviousNotation = "";
+	$scope.replySpeed = 100;
 	
 	$scope.board = chessBoard.getBoard();
 	
@@ -67,8 +68,8 @@ app.directive('chessGame', function($timeout) {
 		var moveApproved = moveResult.isValid;
 		if(moveApproved)
 		{
-			var notation = chessBoard.getNotation(start ,end ,moveResult.isStriking);
-			$scope.swapCoin(start, end);
+			var notation = chessBoard.getNotation(start ,end ,moveResult);
+			$scope.swapCoin(start, end, moveResult.isCastling);
 			$scope.saveNotation(notation);
 			$scope.second_click = false;
 		}
@@ -76,7 +77,11 @@ app.directive('chessGame', function($timeout) {
 			$scope.warning("<strong>Invalid Move!</strong> The move you made is not valid. Please try a different move.");
 	};
 	
-	$scope.swapCoin = function(start, end){
+	$scope.swapCoin = function(start, end, retainEndCoin){
+		if(start.content.hasPiece == true)
+		{
+			start.content.notMoved = false;
+		}
 		$scope.board[end.cell_j-1].splice(end.cell_i-1,1,{
 			"style" : end.style,
 			"cellid" : end.cellid,
@@ -91,6 +96,10 @@ app.directive('chessGame', function($timeout) {
 			"cell_j" : start.cell_j,
 			"content" : {"hasPiece" : false}
 		});
+		if(retainEndCoin == true)
+		{
+			$scope.board[start.cell_j-1][start.cell_i-1].content = end.content;
+		}
 	};
 	
 	$scope.warning = function(message) {
@@ -136,17 +145,7 @@ app.directive('chessGame', function($timeout) {
 					if(isInitial)
 					{
 						$scope.notations = data.notations;
-											
-						for(var j = 0; j < data.notations.length ; j++)
-						{
-							var notationMove = chessBoard.convertNotation(data.notations[j].whiteNotation);
-						$scope.swapCoin($scope.board[notationMove.start.cell_j-1][notationMove.start.cell_i-1],$scope.board[notationMove.end.cell_j-1][notationMove.end.cell_i-1]);
-							if(data.notations[j].blackNotation != "")
-							{
-								notationMove = chessBoard.convertNotation(data.notations[j].blackNotation);
-							$scope.swapCoin($scope.board[notationMove.start.cell_j-1][notationMove.start.cell_i-1],$scope.board[notationMove.end.cell_j-1][notationMove.end.cell_i-1]);
-							}
-						}
+						$scope.timedReply(data,0,false);
 					}
 					else
 					{
@@ -162,7 +161,7 @@ app.directive('chessGame', function($timeout) {
 							});
 						}
 						var notationMove = chessBoard.convertNotation(data.lastNotation);
-						$scope.swapCoin($scope.board[notationMove.start.cell_j-1][notationMove.start.cell_i-1],$scope.board[notationMove.end.cell_j-1][notationMove.end.cell_i-1]);
+						$scope.swapCoin($scope.board[notationMove.start.cell_j-1][notationMove.start.cell_i-1],$scope.board[notationMove.end.cell_j-1][notationMove.end.cell_i-1], notationMove.castling);
 					}
 					$scope.playerColor = data.nextPlayColor;
 					$scope.PreviousNotation = data.lastNotation;
@@ -173,6 +172,30 @@ app.directive('chessGame', function($timeout) {
 				$scope.intervalNotationFunction();
 		});
 	};
+	
+	$scope.timedReply = function(data, j, isBlack)
+	{
+		$timeout(function() {
+			if( j < data.notations.length)
+			{
+				if(!isBlack)
+				{
+					var notationMove = chessBoard.convertNotation(data.notations[j].whiteNotation);
+					$scope.swapCoin($scope.board[notationMove.start.cell_j-1][notationMove.start.cell_i-1],$scope.board[notationMove.end.cell_j-1][notationMove.end.cell_i-1], notationMove.castling);
+				}
+				else
+				{
+					if(data.notations[j].blackNotation != "")
+					{
+						notationMove = chessBoard.convertNotation(data.notations[j].blackNotation);
+					$scope.swapCoin($scope.board[notationMove.start.cell_j-1][notationMove.start.cell_i-1],$scope.board[notationMove.end.cell_j-1][notationMove.end.cell_i-1], notationMove.castling);
+					}
+					j++;
+				}
+				$scope.timedReply(data, j, !isBlack);
+			}
+		}, $scope.replySpeed);
+	}
 	
 	 $scope.intervalNotationFunction = function(){
 		$timeout(function() {
@@ -197,6 +220,37 @@ app.directive('chessGame', function($timeout) {
 	};
    }
  };
+});
+
+app.directive('notationDisplay', function() {
+	return {
+    restrict: 'E',
+	template : '<span>{{displayNotation}}</span>',
+	scope: {
+            notation: "@notation",
+            notationColor : "@notationColor"
+        },
+	link : function (scope, element) {
+		if(scope.notation != "")
+		{
+			if(scope.notation[3] == 'O' && scope.notation[4] == 'A')
+			{
+				scope.displayNotation = 'O-O-O';
+			}
+			else if(scope.notation[3] == 'O' && scope.notation[4] == 'H')
+			{
+				scope.displayNotation = 'O-O';
+			}
+			else
+			{
+				scope.displayNotation = scope.notation;
+			}
+		}
+	},
+	controller : function($scope, $http, $timeout, chessBoard, boardRules) {
+		displayNotation = "";
+	}
+  }
 });
 
 app.filter('reverse', function() {

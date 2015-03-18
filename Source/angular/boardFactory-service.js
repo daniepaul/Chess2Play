@@ -37,7 +37,7 @@ app.factory('chessBoard', function chessBoardFactory() {
 	{
 		for(var i=0; i < Name_Array.length ; i++)
 		{
-			if(Name_Array[i] == char)
+			if(Name_Array[7-i] == char)
 			{
 				return i+1;
 			}
@@ -58,7 +58,7 @@ app.factory('chessBoard', function chessBoardFactory() {
 						"selectedClass" : " ",
 						"cellid" : "cell"+i+j,
 						"cell_i" : i,
-						"cell_j" : j, 
+						"cell_j" : j,
 						"content" : {"hasPiece" : false}
 					};
 				}
@@ -74,6 +74,7 @@ app.factory('chessBoard', function chessBoardFactory() {
 					name = "name='"+initializeCoin.color+"king'";
 				}
 				tempBoard[parseInt(initializeCoin.j)-1][parseInt(initializeCoin.i)-1].content.hasPiece = true;
+				tempBoard[parseInt(initializeCoin.j)-1][parseInt(initializeCoin.i)-1].content.notMoved = true;
 				tempBoard[parseInt(initializeCoin.j)-1][parseInt(initializeCoin.i)-1].content.cellImage = initializeCoin.color+initializeCoin.coin+".png";
 				tempBoard[parseInt(initializeCoin.j)-1][parseInt(initializeCoin.i)-1].content.cellImageName = name;
 				tempBoard[parseInt(initializeCoin.j)-1][parseInt(initializeCoin.i)-1].content.coinColor = initializeCoin.color;
@@ -83,15 +84,19 @@ app.factory('chessBoard', function chessBoardFactory() {
 			
 			return tempBoard;
 		},
-		getNotation : function (start ,end ,isStriking)
+		getNotation : function (start ,end ,moveResult)
 		{
 			var clickedPiece = start.content.coinPiece;
 			if(clickedPiece == "p") 
 				clickedPiece = "";
 			operat = "-";
-			if(isStriking)
+			if(moveResult.isStriking)
 				operat = "X";
-			notation = clickedPiece.toUpperCase()+Name_Array[start.cell_i-1]+start.cell_j+operat+Name_Array[end.cell_i-1]+end.cell_j;
+			if(moveResult.isCastling)
+				operat = "O";
+			if(moveResult.isCheckMove)
+				operat = "C";
+			notation = clickedPiece.toUpperCase()+Name_Array[7-(start.cell_i-1)]+start.cell_j+operat+Name_Array[7-(end.cell_i-1)]+end.cell_j;
 			if(start.content.coinColor == "b")
 				notation = notation +"~";
 			else
@@ -101,18 +106,27 @@ app.factory('chessBoard', function chessBoardFactory() {
 		convertNotation : function (notation)
 		{
 			var charArray = notation.toLowerCase().split('');
-			var returnVal = {
-				clickedPiece : "p",
-				start : {
-					"cell_i" : parseInt(convertAlphabetToNumber(charArray[0])),
-					"cell_j" : parseInt(charArray[1])
-				},
-				end : {
-					"cell_i" : parseInt(convertAlphabetToNumber(charArray[3])),
-					"cell_j" : parseInt(charArray[4])
-				}
-			};
-			if(charArray.length == 6)
+			var returnVal = {};
+			var operator = "";
+			
+			if(charArray.length == 5)
+			{
+				returnVal = {
+					clickedPiece : "p",
+					start : {
+						"cell_i" : parseInt(convertAlphabetToNumber(charArray[0])),
+						"cell_j" : parseInt(charArray[1])
+					},
+					end : {
+						"cell_i" : parseInt(convertAlphabetToNumber(charArray[3])),
+						"cell_j" : parseInt(charArray[4])
+					},
+					castling : false,
+					check : false
+				};
+				operator = charArray[2];
+			}
+			else if(charArray.length == 6)
 			{
 				returnVal = {
 					clickedPiece : charArray[0],
@@ -123,8 +137,20 @@ app.factory('chessBoard', function chessBoardFactory() {
 					end : {
 						"cell_i" : parseInt(convertAlphabetToNumber(charArray[4])),
 						"cell_j" : parseInt(charArray[5])
-					}
+					},
+					castling : false,
+					check : false
 				};
+				operator = charArray[3];
+			}
+			
+			if(operator == "o")
+			{
+				returnVal.castling = true;
+			}
+			else if(operator == "c")
+			{
+				returnVal.check = true;
 			}
 			
 			return returnVal;

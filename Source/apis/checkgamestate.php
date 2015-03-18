@@ -35,7 +35,7 @@ if(isset($_SESSION['userid']) && isset($_REQUEST['gameid']))
 		}
 		else
 		{
-			echo '"status" : "Your request to draw the game is accepted.",';	
+			echo '"status" : "Your request to draw the game is accepted. Game Drawn!",';	
 			echo '"stateCode" : "2"';	
 		}
 	}

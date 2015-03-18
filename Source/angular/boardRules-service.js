@@ -41,13 +41,17 @@ app.factory('boardRules', function boardRulesFactory() {
 			{
 				return {
 					isStriking :allowedLocations[i].isStriking, 
+					isCastling : false,
+					isCheckMove : false,
 					isValid : true
 				};
 				break;
 			}
 		}
 		return {
-			isStriking : false, 
+			isStriking : false,
+			isCastling : false,
+			isCheckMove : false,
 			isValid : false
 		};
 	}
@@ -57,6 +61,30 @@ app.factory('boardRules', function boardRulesFactory() {
 		{
 			mycolor = color;
 			var resultLocation = [];
+			
+			//Castling move check
+			if(coinCell.content.coinPiece == "k" && coinCell.content.notMoved == true)
+			{
+				if(endCell.content.hasPiece == true && endCell.content.coinPiece == "r" && endCell.content.coinColor == coinCell.content.coinColor && endCell.content.notMoved == true)
+				{
+					var hasCoinInPath = false;
+					if(endCell.cell_i == 8)
+					{
+						hasCoinInPath = isOnPath(board,7,endCell.cell_j) || isOnPath(board,6,endCell.cell_j) || isOnPath(board,5,endCell.cell_j);
+					}
+					else if(endCell.cell_i == 1)
+					{
+						hasCoinInPath = isOnPath(board,3,endCell.cell_j) || isOnPath(board,2,endCell.cell_j);
+					}
+					return {
+						isStriking : false,
+						isCastling : true,
+						isCheckMove : false,
+						isValid : !hasCoinInPath
+					};
+				}
+			}
+			
 			if(coinCell.content.coinPiece != "p")
 			{
 				for(var i=0; i<rulesArray.length; i++)
@@ -134,6 +162,8 @@ app.factory('boardRules', function boardRulesFactory() {
 						}
 					}
 				}
+			
+			
 			}
 			else
 			{
