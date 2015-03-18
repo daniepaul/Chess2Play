@@ -65,22 +65,22 @@ app.factory('boardRules', function boardRulesFactory() {
 			//Castling move check
 			if(coinCell.content.coinPiece == "k" && coinCell.content.notMoved == true)
 			{
-				if(endCell.content.hasPiece == true && endCell.content.coinPiece == "r" && endCell.content.coinColor == coinCell.content.coinColor && endCell.content.notMoved == true)
+				if((endCell.cell_i == 6 && board[endCell.cell_j-1][7].content.hasPiece == true && board[endCell.cell_j-1][7].content.coinPiece == "r" && board[endCell.cell_j-1][7].content.coinColor == coinCell.content.coinColor && board[endCell.cell_j-1][7].content.notMoved == true))
 				{
-					var hasCoinInPath = false;
-					if(endCell.cell_i == 8)
-					{
-						hasCoinInPath = isOnPath(board,7,endCell.cell_j) || isOnPath(board,6,endCell.cell_j) || isOnPath(board,5,endCell.cell_j);
-					}
-					else if(endCell.cell_i == 1)
-					{
-						hasCoinInPath = isOnPath(board,3,endCell.cell_j) || isOnPath(board,2,endCell.cell_j);
-					}
 					return {
 						isStriking : false,
 						isCastling : true,
 						isCheckMove : false,
-						isValid : !hasCoinInPath
+						isValid : !(isOnPath(board,7,endCell.cell_j) || isOnPath(board,6,endCell.cell_j) || isOnPath(board,5,endCell.cell_j))
+					};
+				}
+				else if((endCell.cell_i == 2 && board[endCell.cell_j-1][0].content.hasPiece == true && board[endCell.cell_j-1][0].content.coinPiece == "r" && board[endCell.cell_j-1][0].content.coinColor == coinCell.content.coinColor && board[endCell.cell_j-1][0].content.notMoved == true))
+				{
+					return {
+						isStriking : false,
+						isCastling : true,
+						isCheckMove : false,
+						isValid : !(isOnPath(board,3,endCell.cell_j) || isOnPath(board,2,endCell.cell_j))
 					};
 				}
 			}

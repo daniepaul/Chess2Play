@@ -77,7 +77,7 @@ app.directive('chessGame', function($timeout) {
 			$scope.warning("<strong>Invalid Move!</strong> The move you made is not valid. Please try a different move.");
 	};
 	
-	$scope.swapCoin = function(start, end, retainEndCoin){
+	$scope.swapCoin = function(start, end, isCastling){
 		if(start.content.hasPiece == true)
 		{
 			start.content.notMoved = false;
@@ -96,9 +96,17 @@ app.directive('chessGame', function($timeout) {
 			"cell_j" : start.cell_j,
 			"content" : {"hasPiece" : false}
 		});
-		if(retainEndCoin == true)
+		if(isCastling == true)
 		{
-			$scope.board[start.cell_j-1][start.cell_i-1].content = end.content;
+			var endi = end.cell_i;
+			start = $scope.board[start.cell_j-1][0];
+			end = $scope.board[start.cell_j-1][2];
+			if(endi == 6)
+			{
+				start = $scope.board[start.cell_j-1][7];
+				end = $scope.board[start.cell_j-1][4];
+			}
+			$scope.swapCoin(start, end, false);
 		}
 	};
 	
@@ -233,11 +241,11 @@ app.directive('notationDisplay', function() {
 	link : function (scope, element) {
 		if(scope.notation != "")
 		{
-			if(scope.notation[3] == 'O' && scope.notation[4] == 'A')
+			if(scope.notation[3] == 'O' && scope.notation[4] == 'C')
 			{
 				scope.displayNotation = 'O-O-O';
 			}
-			else if(scope.notation[3] == 'O' && scope.notation[4] == 'H')
+			else if(scope.notation[3] == 'O' && scope.notation[4] == 'G')
 			{
 				scope.displayNotation = 'O-O';
 			}
