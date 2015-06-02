@@ -9,7 +9,7 @@ The game have provisions to play multiple games simultaniously. The state of the
 
 Demo to the tool in available in the below link,
 
-http://chessgame.daniepaul.com/
+http://chess2play.daniepaul.com/
 
 Demo Users:
 
