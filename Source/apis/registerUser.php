@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 echo '{';
 ?>
 <?php
-if(isset($_REQUEST['registerUser']) && isset($_REQUEST['username']) && isset($_REQUEST['password']) && isset($_REQUEST['email']))
+if(isset($_REQUEST['username']) && isset($_REQUEST['password']) && isset($_REQUEST['email']))
 {
 	$username = htmlentities($_REQUEST['username'], ENT_QUOTES);
 	$password = htmlentities($_REQUEST['password'], ENT_QUOTES);
