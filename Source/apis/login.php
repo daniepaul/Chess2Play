@@ -24,8 +24,8 @@ if(isset($_REQUEST['verifyLogin']))
 }
 else if(isset($_REQUEST['username']) && isset($_REQUEST['password']))
 {
-	$username = $_REQUEST['username'];
-	$password = $_REQUEST['password'];
+	$username = htmlentities($_REQUEST['username'], ENT_QUOTES);
+	$password = htmlentities($_REQUEST['password'], ENT_QUOTES);
 
 	$loginquery=mysqli_query($con,"select * from userprofile where username='".$username."' and password='".$password."'");
 	$loginrow = mysqli_fetch_assoc($loginquery);

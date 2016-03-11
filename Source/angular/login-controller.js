@@ -21,6 +21,32 @@ app.controller('UserLoginCtrl', function($scope, $http, $window, $location) {
 		});
 	};
 	
+	$scope.register = function(){
+		$http({
+			method: 'POST',
+			url: 'apis/login.php',
+			data: 'username='+$scope.username+'&password='+$scope.password+'&email='+$scope.email+'&country='+$scope.country+'&city='+$scope.city,
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+		}).
+		success(function(data, status, headers, config) {
+			if(data.code == 200)
+			{
+				$scope.loggedIn = false;
+				$scope.userid = "";
+				bootbox.alert("User registered successfully! You can login now."); 
+			}
+			else
+			{
+				$scope.loggedIn = false;
+				$scope.userid = "";
+				bootbox.alert(data.status); 
+			}
+		}).
+		error(function(data, status, headers, config) {
+		  // log error
+		});
+	};	
+	
 	$scope.login = function(){
 	  $http({
 			method: 'POST',
