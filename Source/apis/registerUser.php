@@ -5,15 +5,15 @@ header('Content-Type: application/json');
 echo '{';
 ?>
 <?php
-if(isset($_POST['registerUser']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email']))
+if(isset($_REQUEST['registerUser']) && isset($_REQUEST['username']) && isset($_REQUEST['password']) && isset($_REQUEST['email']))
 {
-	$username = htmlentities($_POST['username'], ENT_QUOTES);
-	$password = htmlentities($_POST['password'], ENT_QUOTES);
-	$email = htmlentities($_POST['email'], ENT_QUOTES);
-	$gender = htmlentities(isset($_POST['gender'])?$_POST['gender']:"Unknown", ENT_QUOTES);
-	$country = htmlentities(isset($_POST['country'])?$_POST['country']:"Unknown", ENT_QUOTES);
-	$age = htmlentities(isset($_POST['age'])?$_POST['age']:"0", ENT_QUOTES);
-	$city = htmlentities(isset($_POST['city'])?$_POST['city']:"Unknown", ENT_QUOTES);
+	$username = htmlentities($_REQUEST['username'], ENT_QUOTES);
+	$password = htmlentities($_REQUEST['password'], ENT_QUOTES);
+	$email = htmlentities($_REQUEST['email'], ENT_QUOTES);
+	$gender = htmlentities(isset($_REQUEST['gender'])?$_REQUEST['gender']:"Unknown", ENT_QUOTES);
+	$country = htmlentities(isset($_REQUEST['country'])?$_REQUEST['country']:"Unknown", ENT_QUOTES);
+	$age = htmlentities(isset($_REQUEST['age'])?$_REQUEST['age']:"0", ENT_QUOTES);
+	$city = htmlentities(isset($_REQUEST['city'])?$_REQUEST['city']:"Unknown", ENT_QUOTES);
 	$registerquery="insert into userprofile (username, email, gender, age, country, city, password) values ('".$username."','".$email."','".$gender."','".$age."','".$country."','".$city."','".$password."')";
 	
 	if (!mysqli_query($con, $registerquery)) 
@@ -27,8 +27,8 @@ if(isset($_POST['registerUser']) && isset($_POST['username']) && isset($_POST['p
 		echo '"status" : "User registered successfully!",';	
     echo '"user" : {';
       echo ' 	"userId" : "'.mysqli_insert_id($con).'",';
-      echo '	"username" : "'.$_POST['username'].'",';					
-      echo '	"email" : "'.$_POST['email'].'"';
+      echo '	"username" : "'.$_REQUEST['username'].'",';					
+      echo '	"email" : "'.$_REQUEST['email'].'"';
 		echo '}';
 	}
 }
