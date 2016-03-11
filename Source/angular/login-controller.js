@@ -33,6 +33,7 @@ app.controller('UserLoginCtrl', function($scope, $http, $window, $location) {
 			{
 				$scope.loggedIn = false;
 				$scope.userid = "";
+				$('#addProfileModal').modal('hide');
 				bootbox.alert("User registered successfully! You can login now."); 
 			}
 			else
