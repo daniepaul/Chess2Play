@@ -24,7 +24,7 @@ app.controller('UserLoginCtrl', function($scope, $http, $window, $location) {
 	$scope.register = function(){
 		$http({
 			method: 'POST',
-			url: 'apis/login.php',
+			url: 'apis/registerUser.php',
 			data: 'username='+$scope.username+'&password='+$scope.password+'&email='+$scope.email+'&country='+$scope.country+'&city='+$scope.city,
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 		}).
