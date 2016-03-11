@@ -16,20 +16,6 @@ app.factory('ProfileService',  ['$window', '$http' ,function($window, $http) {
 		});
 		return profileService.data;
 	};
-	
-	profileService.register = function(userObj){
-	  $http.post('apis/registerUser.php', userObj).
-		success(function(data, status, headers, config) {
-			if(data.code == 200)
-			{
-				profileService.data = data.user;
-			}
-		}).
-		error(function(data, status, headers, config) {
-		  // log error
-		});
-		return profileService.data;
-	};
   	
 	return profileService;
 	
